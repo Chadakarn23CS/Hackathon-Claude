@@ -17,6 +17,7 @@ import { SensitivityView } from './ui/views/SensitivityView';
 import { ControlView } from './ui/views/ControlView';
 import { GuideView } from './ui/views/GuideView';
 import { ScaleView } from './ui/views/ScaleView';
+import { TourGuide } from './ui/TourGuide';
 
 const TABS = [
   { id: 'wf', label: 'Workflow' },
@@ -37,6 +38,7 @@ type TabId = typeof TABS[number]['id'];
 export default function App() {
   const [knobs, setKnobs] = useState<Knobs>(defaultKnobs());
   const [tab, setTab] = useState<TabId>('wf');
+  const [tourSignal, setTourSignal] = useState(0);
 
   const setKnob = (k: keyof Knobs, v: number) => setKnobs((p) => ({ ...p, [k]: v }));
   const applyPreset = (partial: Partial<Knobs>) => setKnobs({ ...defaultKnobs(), ...partial });
@@ -85,6 +87,7 @@ export default function App() {
         <button className="hdr-btn" title="Load a previously exported scenario file to restore its operating point"
           onClick={() => fileRef.current?.click()}>↑ Load</button>
         <input ref={fileRef} type="file" accept="application/json,.json" style={{ display: 'none' }} onChange={onLoadFile} />
+        <button className="hdr-btn" title="Replay the guided tour" onClick={() => setTourSignal((s) => s + 1)}>◎ Tour</button>
         <span className="badge ok">port ≤0.17%</span>
         <span className="badge">literature-parameterized</span>
       </header>
@@ -143,6 +146,7 @@ export default function App() {
           </div>
         </main>
       </div>
+      <TourGuide tab={tab} setTab={(t) => setTab(t as TabId)} signal={tourSignal} />
     </div>
   );
 }

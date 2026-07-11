@@ -37,6 +37,16 @@ export function Plot({ data, layout, height = 260 }: {
     };
     Plotly.react(ref.current, data, merged, CONFIG);
   }, [data, layout, height]);
+  // Keep the plot sized to its container even when width changes *after* mount
+  // (mobile sidebar collapse, orientation change, tab switch) — responsive:true
+  // only reacts to window resize, which those don't always fire.
+  useEffect(() => {
+    const el = ref.current;
+    if (!el || typeof ResizeObserver === 'undefined') return;
+    const ro = new ResizeObserver(() => { try { Plotly.Plots.resize(el); } catch { /* not plotted yet */ } });
+    ro.observe(el);
+    return () => ro.disconnect();
+  }, []);
   useEffect(() => () => { if (ref.current) Plotly.purge(ref.current); }, []);
   return <div className="chart" ref={ref} style={{ height }} />;
 }
