@@ -55,6 +55,15 @@ How to Use.
   locally via the `cho-cqa-recalibrate` Claude Science skill and is never included in this build.
 - Models **N-linked glycosylation** of the IgG1 Fc glycan (Asn297). O-glycosylation is out of scope.
 - The JavaScript engine reproduces its Python reference to ≤0.17% (36 automated tests).
+- Every parameter and mechanism is traced to its source in [`docs/PARAMETER_PROVENANCE.md`](docs/PARAMETER_PROVENANCE.md).
+
+## Related work
+GlycoPy (Ma, Guo & Braatz, MIT — *Comput. Chem. Eng.* 2026) is a recent CasADi-based Python
+framework for hierarchical modeling and **NMPC** of the same CHO mAb-glycosylation problem. It
+independently uses the same enzyme × donor × Mn-cofactor Golgi kinetics GlycoTwin derives, which
+corroborates the mechanism. The two are complementary: GlycoPy is a research modeling/NMPC toolkit;
+GlycoTwin is an interactive, explainable, zero-install decision tool. Full comparison and adopted
+improvements: [`docs/RELATED_WORK_GlycoPy.md`](docs/RELATED_WORK_GlycoPy.md).
 
 ## License
 MIT — see [LICENSE](LICENSE).
