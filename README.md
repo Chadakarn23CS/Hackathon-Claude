@@ -104,7 +104,8 @@ agent-augmented twin running the whole molecule → CQA → control chain for an
 explainable and zero-install — a combination the current literature does not offer as one tool.
 
 ## Related work
-GlycoPy (Ma, Guo & Braatz, MIT — *Comput. Chem. Eng.* 2026) is a recent CasADi-based Python
+GlycoPy (Ma, Guo & Braatz, MIT — *Comput. Chem. Eng.* 213:109726, 2026;
+[doi:10.1016/j.compchemeng.2026.109726](https://doi.org/10.1016/j.compchemeng.2026.109726)) is a recent CasADi-based Python
 framework for hierarchical modeling and **NMPC** of the same CHO mAb-glycosylation problem. It
 agrees on the drivers of Golgi glycosylation (enzyme, nucleotide-sugar donor, Mn²⁺ cofactor),
 though at higher kinetic fidelity — GlycoPy uses enzyme-specific Bi-Bi rate laws where GlycoTwin
