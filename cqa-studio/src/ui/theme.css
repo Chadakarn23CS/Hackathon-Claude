@@ -1,47 +1,51 @@
 :root {
-  /* Scientific-instrument identity: warm paper surfaces, ink header, one signature accent,
-     hairline structure instead of drop-shadows, monospace numerics. */
-  --bg: #f4f3ef;          /* warm paper, not cool AI-blue */
-  --panel: #ffffff;
-  --panel-2: #faf9f5;
-  --border: #e3e0d8;      /* warm hairline */
-  --ink: #12161d;         /* header / brand ink */
-  --text: #1a1e26; --muted: #5b626d; --faint: #969ba4;
-  --accent: #0f6e63;      /* deep pine-teal signature (replaces default-blue) */
-  --accent-hi: #0b9a86;   /* brighter teal for hover only */
-  --accent-2: #0ea5a4; --warn: #b45309; --bad: #c2410c;
-  --good: #15803d; --grid: #eceae3;
-  --in: #0f6e63; --met: #0ea5a4; --env: #b45309; --prec: #7c3aed; --gene: #64748b;
-  /* near-flat: hairline + a whisper of depth, never the SaaS shadow stack */
-  --shadow: 0 1px 0 rgba(18,22,29,0.04);
-  --shadow-sm: 0 1px 0 rgba(18,22,29,0.04);
-  --r: 7px; --r-sm: 5px;  /* squarer corners read "instrument", not "app" */
+  /* Editorial-botanical identity: warm cream canvas, high-contrast serif display type,
+     a muted sage/plum/clay palette, soft diffuse depth and generous rounded corners.
+     Dense data (numerals, charts, tables) stays in clean sans/mono for legibility. */
+  --bg: #f3eee3;          /* warm cream canvas */
+  --panel: #fffef9;       /* warm white card surface */
+  --panel-2: #f7f1e6;     /* recessed warm surface */
+  --border: #e7dece;      /* soft warm hairline */
+  --ink: #2f2a23;         /* warm near-black for display type */
+  --text: #38322b; --muted: #7c7368; --faint: #a99f90;
+  --accent: #5f7d5c;      /* muted sage — primary signature */
+  --accent-hi: #6f9268;   /* brighter sage for hover */
+  --accent-2: #8a76b3;    /* soft plum — secondary accent */
+  --warn: #b17f3d; --bad: #b25a41;
+  --good: #5f8b63; --grid: #efe7d9;
+  --in: #5f7d5c; --met: #8a76b3; --env: #b17f3d; --prec: #8a76b3; --gene: #9a8e7c;
+  /* soft, warm, diffuse depth — a real card lift, not a hairline */
+  --shadow: 0 4px 16px rgba(74,60,42,0.07), 0 1px 3px rgba(74,60,42,0.05);
+  --shadow-sm: 0 2px 8px rgba(74,60,42,0.05);
+  --r: 16px; --r-sm: 11px;  /* generous, soft rounded corners read "editorial", not "instrument" */
   --mono: ui-monospace, "SF Mono", "Cascadia Code", "Menlo", monospace;
+  --serif: "Hoefler Text", "Iowan Old Style", "Palatino Linotype", Palatino, "Book Antiqua", Georgia, "Times New Roman", serif;
+  --sans: "Inter", "Segoe UI", system-ui, -apple-system, sans-serif;
   font-synthesis: none; -webkit-font-smoothing: antialiased; text-rendering: optimizeLegibility;
 }
 * { box-sizing: border-box; }
 html, body, #root { height: 100%; margin: 0; }
 body {
   background: var(--bg); color: var(--text);
-  font-family: "Inter", "Segoe UI", system-ui, -apple-system, sans-serif;
-  font-size: 13.5px; line-height: 1.45;
+  font-family: var(--sans);
+  font-size: 13.5px; line-height: 1.5;
 }
 .app { display: flex; flex-direction: column; height: 100vh; overflow: hidden; }
 
 /* Header */
-.hdr { display: flex; align-items: center; gap: 14px; padding: 12px 20px;
-  background: var(--ink);
-  border-bottom: 2px solid var(--accent); }
-.hdr h1 { font-size: 16px; font-weight: 700; margin: 0; letter-spacing: 0.2px; color: #ffffff;
-  display: flex; align-items: baseline; gap: 9px; }
-.hdr h1 .tm { font-size: 9px; font-weight: 600; color: var(--accent-hi);
-  font-family: var(--mono); letter-spacing: 0.5px; text-transform: uppercase; align-self: center; }
+.hdr { display: flex; align-items: center; gap: 14px; padding: 14px 24px;
+  background: var(--panel);
+  border-bottom: 1px solid var(--border); }
+.hdr h1 { font-family: var(--serif); font-size: 23px; font-weight: 600; margin: 0; letter-spacing: 0.1px; color: var(--ink);
+  display: flex; align-items: baseline; gap: 10px; }
+.hdr h1 .tm { font-size: 9px; font-weight: 700; color: var(--accent);
+  font-family: var(--sans); letter-spacing: 1.2px; text-transform: uppercase; align-self: center; }
 .hdr .brandmark { display: inline-flex; align-items: center; }
-.hdr .sub { color: rgba(255,255,255,0.62); font-size: 11px; margin-top: 3px; font-family: var(--mono); letter-spacing: 0.1px; }
+.hdr .sub { color: var(--muted); font-size: 13px; margin-top: 3px; font-family: var(--serif); font-style: italic; letter-spacing: 0.1px; }
 .hdr .spacer { flex: 1; }
-.badge { font-size: 10px; padding: 3px 9px; border-radius: 3px; border: 1px solid rgba(255,255,255,0.16);
-  color: rgba(255,255,255,0.78); background: rgba(255,255,255,0.05); font-family: var(--mono); letter-spacing: 0.2px; }
-.badge.ok { color: #7fe9cf; border-color: rgba(15,110,99,0.6); background: rgba(15,110,99,0.22); }
+.badge { font-size: 10px; padding: 3px 10px; border-radius: 20px; border: 1px solid var(--border);
+  color: var(--muted); background: var(--panel-2); font-family: var(--sans); font-weight: 600; letter-spacing: 0.3px; }
+.badge.ok { color: var(--accent); border-color: #cbdcc6; background: #eef3ec; }
 
 /* Tabs */
 .tabs { display: flex; gap: 2px; padding: 0 14px; background: var(--panel);
@@ -92,7 +96,7 @@ body {
 /* Panels & charts */
 .panel { background: var(--panel); border: 1px solid var(--border); border-radius: var(--r);
   padding: 14px 14px 12px; margin-bottom: 14px; box-shadow: var(--shadow-sm); }
-.panel h3 { margin: 0 0 8px; font-size: 12.5px; font-weight: 600; color: var(--text); }
+.panel h3 { margin: 0 0 8px; font-family: var(--serif); font-size: 16px; font-weight: 600; color: var(--ink); letter-spacing: 0.1px; }
 .panel .desc { font-size: 11px; color: var(--muted); margin: -4px 0 10px; }
 .chart { width: 100%; }
 .grid2 { display: grid; grid-template-columns: 1fr 1fr; gap: 14px; }
@@ -155,8 +159,8 @@ table.tbl td { font-variant-numeric: tabular-nums; }
 .cqa-sub { font-size: 10px; color: var(--faint); margin-top: 4px; }
 
 /* ---- Cell Biology view ---- */
-.bio-legend { background: #f0f6f4; border: 1px solid #d3e6e1; border-left: 3px solid var(--accent); border-radius: var(--r-sm);
-  padding: 9px 13px; font-size: 12px; color: var(--muted); margin-bottom: 12px; line-height: 1.5; }
+.bio-legend { background: #eef3ea; border: 1px solid #dbe6d5; border-left: 3px solid var(--accent); border-radius: var(--r-sm);
+  padding: 11px 15px; font-size: 12.5px; color: var(--muted); margin-bottom: 12px; line-height: 1.55; }
 .bio-legend b { color: var(--text); }
 .bio-panel { display: flex; justify-content: center; padding: 8px 12px 14px; }
 .svg-title { font-size: 14px; font-weight: 700; fill: var(--text); }
@@ -194,7 +198,7 @@ table.tbl td { font-variant-numeric: tabular-nums; }
 /* ---- Guide view ---- */
 .guide { max-width: 1000px; margin: 0 auto; }
 .guide-hero { text-align: center; margin: 6px 0 18px; }
-.guide-hero h2 { font-size: 22px; font-weight: 800; margin: 0 0 8px; color: var(--text); letter-spacing: -0.3px; }
+.guide-hero h2 { font-family: var(--serif); font-size: 30px; font-weight: 600; margin: 0 0 10px; color: var(--ink); letter-spacing: 0.1px; }
 .guide-hero p { font-size: 13.5px; color: var(--muted); max-width: 720px; margin: 0 auto; line-height: 1.6; }
 .guide-grid { display: grid; grid-template-columns: 1fr 1fr; gap: 14px; }
 .guide-span { grid-column: 1 / -1; }
@@ -248,7 +252,7 @@ table.tbl td { font-variant-numeric: tabular-nums; }
 .wf-line { width: 2px; flex: 1; background: var(--border); margin: 4px 0; min-height: 18px; }
 .wf-card { flex: 1; border: 1px solid var(--border); border-radius: 10px; padding: 12px 14px;
   margin-bottom: 14px; background: var(--panel); }
-.wf-title { font-weight: 700; font-size: 15px; color: var(--text); margin-bottom: 4px; }
+.wf-title { font-family: var(--serif); font-weight: 600; font-size: 18px; color: var(--ink); margin-bottom: 5px; letter-spacing: 0.1px; }
 .wf-body { font-size: 13px; line-height: 1.55; color: var(--text); }
 .wf-why { font-size: 12px; color: var(--accent-2); margin: 6px 0 10px; }
 .wf-go { font-size: 12.5px; padding: 6px 12px; }
@@ -346,10 +350,10 @@ table.tbl td { font-variant-numeric: tabular-nums; }
 .met-list li { margin-bottom: 2px; }
 
 /* ---- Header scenario export/load buttons ---- */
-.hdr-btn { font-size: 11px; font-weight: 600; color: rgba(255,255,255,0.9); background: rgba(255,255,255,0.08);
-  border: 1px solid rgba(255,255,255,0.22); border-radius: 4px; padding: 4px 10px; cursor: pointer;
-  font-family: var(--mono); letter-spacing: 0.2px; transition: background 0.12s, border-color 0.12s; }
-.hdr-btn:hover { background: rgba(11,154,134,0.28); border-color: var(--accent-hi); color: #fff; }
+.hdr-btn { font-size: 11px; font-weight: 600; color: var(--muted); background: var(--panel-2);
+  border: 1px solid var(--border); border-radius: 20px; padding: 5px 12px; cursor: pointer;
+  font-family: var(--sans); letter-spacing: 0.2px; transition: background 0.12s, border-color 0.12s, color 0.12s; }
+.hdr-btn:hover { background: #eef3ec; border-color: var(--accent); color: var(--accent); }
 
 /* ---- Guide two-lever pathway SVG ---- */
 .lever-svg { width: 100%; max-width: 720px; height: auto; margin: 8px 0 12px; display: block; }
