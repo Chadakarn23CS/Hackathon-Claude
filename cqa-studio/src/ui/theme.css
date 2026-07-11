@@ -279,22 +279,23 @@ table.tbl td { font-variant-numeric: tabular-nums; }
 
 /* --- process map --- */
 .wf-map { background: var(--panel-2); border-radius: 26px; box-shadow: var(--shadow-sm);
-  padding: 26px 24px; overflow-x: auto; }
-.wf-stages { display: flex; align-items: flex-start; gap: 4px; min-width: max-content; }
-.wf-stage-wrap { display: flex; align-items: flex-start; gap: 4px; }
-.wf-stage { display: flex; flex-direction: column; gap: 12px; min-width: 176px; max-width: 210px; }
-.wf-stage-hd { display: flex; align-items: center; gap: 11px; }
-.wf-badge { width: 46px; height: 46px; flex: none; border-radius: 16px; background: var(--accent);
+  padding: 22px 18px; overflow: hidden; }
+/* Five stages share the frame width and shrink to fit — no horizontal scroll. */
+.wf-stages { display: flex; align-items: flex-start; gap: 2px; }
+.wf-stage-wrap { display: flex; align-items: flex-start; gap: 2px; flex: 1 1 0; min-width: 0; }
+.wf-stage { display: flex; flex-direction: column; gap: 10px; flex: 1; min-width: 0; }
+.wf-stage-hd { display: flex; align-items: center; gap: 10px; }
+.wf-badge { width: 44px; height: 44px; flex: none; border-radius: 15px; background: var(--accent);
   color: #f5ead8; display: inline-flex; align-items: center; justify-content: center; box-shadow: var(--shadow-sm); }
-.wf-badge svg { width: 24px; height: 24px; }
-.wf-stage-meta { display: flex; flex-direction: column; gap: 1px; }
-.wf-stage-no { font-size: 10px; font-weight: 700; letter-spacing: 0.13em; text-transform: uppercase; color: var(--accent-2-press); }
-.wf-stage-name { font-family: var(--serif); font-size: 19px; color: var(--ink); line-height: 1.1; }
-.wf-conn { align-self: flex-start; margin-top: 12px; color: #b3a891; display: inline-flex; }
+.wf-badge svg { width: 23px; height: 23px; }
+.wf-stage-meta { display: flex; flex-direction: column; gap: 1px; min-width: 0; }
+.wf-stage-no { font-size: 9.5px; font-weight: 700; letter-spacing: 0.12em; text-transform: uppercase; color: var(--accent-2-press); }
+.wf-stage-name { font-family: var(--serif); font-size: 18px; color: var(--ink); line-height: 1.1; }
+.wf-conn { align-self: flex-start; margin-top: 12px; color: #b3a891; display: inline-flex; flex: none; }
 .wf-conn svg { width: 22px; height: 22px; }
-.wf-nodes { display: flex; flex-direction: column; gap: 10px; }
-.wf-node { display: flex; gap: 11px; align-items: flex-start; text-align: left; cursor: pointer;
-  background: var(--panel); border: 1.5px solid var(--border); border-radius: 18px; padding: 12px 13px;
+.wf-nodes { display: flex; flex-direction: column; gap: 9px; }
+.wf-node { display: flex; gap: 9px; align-items: flex-start; text-align: left; cursor: pointer;
+  background: var(--panel); border: 1.5px solid var(--border); border-radius: 18px; padding: 11px 11px;
   box-shadow: var(--shadow-sm); transition: transform 0.14s, box-shadow 0.14s, border-color 0.14s; }
 .wf-node:hover { transform: translateY(-2px); box-shadow: var(--shadow-md); border-color: var(--accent-2); }
 .wf-node-no { width: 28px; height: 28px; flex: none; border-radius: 50%; background: var(--accent-2);
@@ -358,6 +359,12 @@ table.tbl td { font-variant-numeric: tabular-nums; }
   .wf-detail { grid-template-columns: 1fr; }
   .wf-rail { order: 2; } .wf-center { order: 1; } .wf-side { order: 3; }
   .wf-step-title, .wf-headline { font-size: 34px; }
+}
+/* Phone: five columns can't fit side-by-side — stack the stages, arrows point down. */
+@media (max-width: 720px) {
+  .wf-stages { flex-direction: column; gap: 8px; }
+  .wf-stage-wrap { flex-direction: column; width: 100%; flex: none; gap: 8px; align-items: stretch; }
+  .wf-conn { align-self: center; margin: 0; transform: rotate(90deg); }
 }
 
 /* ---- Batch Monitor (digital twin) ---- */
