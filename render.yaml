@@ -1,0 +1,21 @@
+# Render blueprint — https://render.com/docs/blueprint-spec
+# One web service that serves the built GlycoTwin app AND the FastAPI /api
+# (including /api/agent/optimize) from a single public origin.
+services:
+  - type: web
+    name: glycotwin
+    runtime: docker
+    plan: free                 # free tier sleeps after ~15 min idle (cold start ~50s)
+    rootDir: glycotwin-server  # build context = glycotwin-server/ (Dockerfile COPY paths)
+    dockerfilePath: ./Dockerfile
+    dockerContext: .
+    healthCheckPath: /api/health
+    autoDeploy: true           # redeploy on every push to the tracked branch
+    envVars:
+      # Set this in the Render dashboard to enable live-LLM agent mode.
+      # Leave unset for keyless deterministic search (no cost, safe on a public URL).
+      - key: ANTHROPIC_API_KEY
+        sync: false
+      # Optional: override the agent's LLM. Defaults to the app's built-in choice.
+      # - key: GLYCOTWIN_MODEL
+      #   value: claude-haiku-4-5-20251001
