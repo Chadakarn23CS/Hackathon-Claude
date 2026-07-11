@@ -9,3 +9,10 @@ The model is parameterized entirely from public, peer-reviewed literature
 (cited by DOI in references/ and docs/PARAMETER_PROVENANCE.md). No copyrighted
 full-text articles and no proprietary or company-specific data are included in
 or derivable from this repository.
+
+Independence: this is an independent personal project, developed on personal
+time for a public hackathon, using only public literature and this open-source
+mechanistic model. It uses no employer data, models, code, or intellectual
+property, and is not affiliated with, nor does it represent, the author's
+employer. It is mechanistic and data-free by design (no machine learning and no
+process data), a regime complementary to and distinct from data-driven modeling.

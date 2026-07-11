@@ -1,0 +1,82 @@
+{
+  "question": "Across CHO scale-up, does Fc-galactosylation degrade via CO2 accumulation, or is O2/something else the real lever? Which single knob best holds it?",
+  "experiments": [
+    {
+      "name": "scale @ constant DO",
+      "runs": [
+        {
+          "knobs": {
+            "kLa_CO2": 0.11,
+            "DO": 50.0
+          },
+          "galactosylation": 51.77,
+          "pCO2max": 59.8
+        },
+        {
+          "knobs": {
+            "kLa_CO2": 0.08,
+            "DO": 50.0
+          },
+          "galactosylation": 52.21,
+          "pCO2max": 65.4
+        },
+        {
+          "knobs": {
+            "kLa_CO2": 0.05,
+            "DO": 50.0
+          },
+          "galactosylation": 52.74,
+          "pCO2max": 73.9
+        }
+      ]
+    },
+    {
+      "name": "DO sweep @ bench",
+      "runs": [
+        {
+          "DO": 20.0,
+          "galactosylation": 51.77,
+          "sialylation": 3.68
+        },
+        {
+          "DO": 50.0,
+          "galactosylation": 51.77,
+          "sialylation": 4.13
+        },
+        {
+          "DO": 90.0,
+          "galactosylation": 51.77,
+          "sialylation": 4.29
+        }
+      ]
+    },
+    {
+      "name": "levers @ 2000 L",
+      "base_galactosylation": 52.74,
+      "runs": [
+        {
+          "lever": "B4GALT1 3x",
+          "galactosylation": 88.08,
+          "recovery_pp": 35.34
+        },
+        {
+          "lever": "Mn 2.5x",
+          "galactosylation": 62.1,
+          "recovery_pp": 9.36
+        },
+        {
+          "lever": "DO 90%",
+          "galactosylation": 52.74,
+          "recovery_pp": 0.0
+        },
+        {
+          "lever": "CO2 restore",
+          "galactosylation": 51.77,
+          "recovery_pp": -0.97
+        }
+      ]
+    }
+  ],
+  "critic_mode": "deterministic",
+  "finding": "Galactosylation is ROBUST across scale (51.77%\u219252.74%, net +0.97 pp) even as pCO2 rises 59.8\u219273.9 mmHg. It is essentially insensitive to O2 (0.00 pp across DO 20\u201390%). The dominant lever is 'B4GALT1 3x' (+35.3 pp) \u2014 genome/media, not the gas strategy. Conclusion: for galactosylation control across scale, prioritize clone (B4GALT1) and media (Mn2+/galactose); CO2/pH control matters more for pH-sensitive attributes and titer."
+}
