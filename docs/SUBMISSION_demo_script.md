@@ -23,6 +23,12 @@ galactose. Drag **CO₂ stripping** down — Golgi lumen turns amber (acidifies)
 falls. Drag **Dissolved O₂** down — mitochondrion dims, sialylation falls. Let the causal
 chain show for a few seconds without narration.
 
+*Optional ammonia beat (if pacing allows, ~6 s):* raise **glutamine feed** — ammonia climbs
+late in the batch, the Cell Biology panel's ammonia bullet updates, and galactosylation drops.
+One line of voiceover: "Push glutamine and ammonia builds — it raises Golgi pH the opposite way
+CO₂ lowers it, so late-batch galactose falls. That mechanism was added during the event, from
+the Villiger papers." This is the one beat that shows a mechanism built *during* the hackathon.
+
 ## 0:45–1:10 — Grounded, and the second lever visible (3 · Live Simulation)
 **Voiceover:** "We started from a real question — do scale-dependent CO₂ and pH gradients
 shift glycan CQAs? — and grounded the model in public datasets: CHOGlycoNET, a CSBJ
@@ -74,3 +80,5 @@ whole causal chain, interactive, and entirely open."
   can be trimmed to a fast montage.
 - The LLM proposer in Agent Optimize is optional and server-side; the demo can run the
   in-browser search (no key) and still show the full loop.
+- The ammonia beat is optional but high-value for the "New Work" rule — it's the clearest
+  on-screen evidence of a mechanism implemented during the event. Drop it only if over 2:55.
