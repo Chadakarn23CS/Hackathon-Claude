@@ -1,0 +1,26 @@
+cff-version: 1.2.0
+message: "If you use GlycoTwin, please cite it as below."
+title: "GlycoTwin: a mechanistic, interactive digital twin for antibody N-glycosylation in CHO cell culture"
+abstract: >-
+  GlycoTwin links controllable bioreactor parameters to the N-glycan critical
+  quality attributes of an IgG1 Fc glycan through a mechanistic model: a 9-state
+  fed-batch CHO bioreactor ODE feeds an ER to Golgi enzyme train driven by the two
+  real control levers, Golgi glycosyltransferases and nucleotide-sugar donors.
+  It provides interactive simulation, ICH-Q8 design-space exploration, Monte-Carlo
+  robustness, PID control with disturbance rejection, and a governed agent optimizer,
+  delivered as a single offline HTML file plus an optional FastAPI backend.
+type: software
+authors:
+  - given-names: Chadakarn
+    family-names: Sirasitthichoke
+    alias: Chadakarn23CS
+license: Apache-2.0
+repository-code: "https://github.com/Chadakarn23CS/Hackathon-Claude"
+keywords:
+  - CHO cell culture
+  - antibody glycosylation
+  - critical quality attributes
+  - digital twin
+  - mechanistic model
+  - bioprocess control
+date-released: 2026-07-11

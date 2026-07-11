@@ -113,4 +113,10 @@ GlycoTwin is an interactive, explainable, zero-install decision tool. Full compa
 improvements: [`docs/RELATED_WORK_GlycoPy.md`](docs/RELATED_WORK_GlycoPy.md).
 
 ## License
-MIT — see [LICENSE](LICENSE).
+Apache License 2.0 — see [LICENSE](LICENSE) and [NOTICE](NOTICE). Apache-2.0 adds an explicit
+patent grant and patent-retaliation clause on top of permissive reuse, and requires that the
+attribution notices travel with any redistribution.
+
+## Citation
+If you use GlycoTwin, please cite it — see [CITATION.cff](CITATION.cff) (GitHub renders a
+"Cite this repository" button). Author: Chadakarn Sirasitthichoke.

@@ -1,0 +1,11 @@
+GlycoTwin — a mechanistic digital twin for antibody glycosylation
+Copyright 2026 Chadakarn Sirasitthichoke
+
+This product includes software developed by Chadakarn Sirasitthichoke.
+
+Licensed under the Apache License, Version 2.0 (see LICENSE).
+
+The model is parameterized entirely from public, peer-reviewed literature
+(cited by DOI in references/ and docs/PARAMETER_PROVENANCE.md). No copyrighted
+full-text articles and no proprietary or company-specific data are included in
+or derivable from this repository.
