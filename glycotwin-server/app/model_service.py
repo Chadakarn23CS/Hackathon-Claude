@@ -53,7 +53,7 @@ def _glyco_state(k, Glc, Gln, Gal_ext, pCO2, mu, Amm=0.0):
 def simulate(knobs: dict[str, float], days: int = 13) -> dict[str, Any]:
     k = {**DEFAULT_KNOBS, **(knobs or {})}
     p = _bio_params(k)
-    gp = cm.golgi_params(); gp["pH_set"] = k["pH_set"]
+    gp = cm.golgi_params(); gp["pH_set"] = k["pH_set"]; gp["mu_max"] = k["mu_max"]
     gp_tau = dict(gp); gp_tau["tauG"] = gp["tauG"] * math.exp(-0.045 * (k["Tset"] - 37.0))
     sol = cm.run_bioreactor(p, days=days)
     t = sol.t  # hours
@@ -97,8 +97,13 @@ def sensitivity(knobs, cqa: str = "galactosylation", frac: float = 0.15):
     out = []
     for key in ("kLa_CO2", "pH_set", "mu_max", "Fglc", "Fgln", "Fgal",
                 "asn_level", "Tset", "DO", "Mn", "MGAT", "B4GALT", "FUT8", "ST6GAL"):
-        hi = dict(base); hi[key] = base[key] * (1 + frac) if base[key] else frac
-        lo = dict(base); lo[key] = base[key] * (1 - frac) if base[key] else -frac
+        # All knobs are physically non-negative (feeds, DO, temperatures, expression
+        # levels), so clamp the low arm at 0. A zero-baseline knob (e.g. Fgal) becomes
+        # a one-sided 0 -> +frac perturbation instead of an unphysical negative feed.
+        hi_v = base[key] * (1 + frac) if base[key] else frac
+        lo_v = max(base[key] * (1 - frac) if base[key] else 0.0, 0.0)
+        hi = dict(base); hi[key] = hi_v
+        lo = dict(base); lo[key] = lo_v
         vhi = harvest_cqa(hi)[cqa]; vlo = harvest_cqa(lo)[cqa]
         out.append({"knob": key, "low": vlo, "high": vhi, "delta": abs(vhi - vlo)})
     out.sort(key=lambda d: d["delta"], reverse=True)
