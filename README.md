@@ -8,6 +8,23 @@ glycan (galactosylation, afucosylation, sialylation, high-mannose).
 Glycosylation is driven by its two real control levers — **Golgi enzymes** and
 **nucleotide-sugar donors** — and both are explicit in the model.
 
+## The biology, and why a mechanistic model
+The engine encodes a single multiplicative activity law:
+**enzyme activity = expression × pH-factor × Mn²⁺-cofactor × substrate(Michaelis)**, with
+conversion at each step `= 1 − exp(−activity · τ)` over the Golgi residence time τ. The two
+levers are:
+1. **Enzymes** — the glycosyltransferases (MGAT, B4GALT1, FUT8, ST6GAL1). Moved by expression,
+   Golgi-lumen pH (each enzyme has its own optimum), the Mn²⁺ cofactor, and residence time.
+2. **Nucleotide-sugar donors** — UDP-GlcNAc, UDP-Gal, GDP-Fuc, CMP-NeuAc, fed by central
+   metabolism (glucose / glutamine / asparagine). A fully-active enzyme adds nothing if its
+   donor pool is empty; either lever at zero shuts a step down.
+
+The network is **sequential and branched** — GlcNAc antenna → galactose → sialic acid, with core
+fucose a parallel branch, and each step gated by the one before it. You steer a whole competing
+distribution under one transit time, so terminal features are coupled and non-obvious. That
+step-gated coupling is exactly what a mechanistic model captures and a look-up table or pure ML
+correlation does not.
+
 ## Run it
 
 **Offline (no install):** open `glycotwin_app.html` in any browser. Every tab works except the
@@ -36,7 +53,7 @@ cd cqa-studio && npm install && npm test && npm run build
 | `cqa-studio/` | TypeScript/React source + Vitest suite (36 tests) |
 | `glycotwin-server/` | FastAPI backend; imports the Python model directly as the single source of truth |
 | `model/` | `cho_cqa_model.py` (bioreactor + glyco reference) and `golgi_pfr.py` |
-| `docs/` | Biology scope, scale-up strategy, novelty, drug-development value, submission materials |
+| `docs/` | Parameter provenance, GlycoPy related-work comparison, written submission summary |
 | `references/` | Citation metadata (RIS / BibTeX / table) for the parameterizing literature |
 
 ## The tool (12 views)
@@ -56,6 +73,35 @@ How to Use.
 - Models **N-linked glycosylation** of the IgG1 Fc glycan (Asn297). O-glycosylation is out of scope.
 - The JavaScript engine reproduces its Python reference to ≤0.17% (36 automated tests).
 - Every parameter and mechanism is traced to its source in [`docs/PARAMETER_PROVENANCE.md`](docs/PARAMETER_PROVENANCE.md).
+
+## Where it fits in antibody drug development
+The core shift is moving glycan-CQA decisions **upstream** — from "measure after the run and hope"
+to "predict, design for, and control." Each CQA is a clinical lever with a development handle:
+
+| CQA | Clinical consequence | Development lever |
+|---|---|---|
+| Afucosylation | ADCC potency (cell-killing — oncology mAbs) | FUT8 knockdown |
+| Galactosylation | CDC potency + lot-to-lot consistency | B4GALT1, Mn²⁺, galactose feed |
+| Sialylation | Half-life, anti-inflammatory character | ST6GAL1, DO, precursor supply |
+| High mannose | Faster clearance (PK liability) | asparagine / precursor supply, residence time |
+
+Concrete in-silico moves (from the model): FUT8 knockdown → afucosylation 3 → 37% (an
+ADCC-enhanced clone); B4GALT1 overexpression → galactosylation 53 → 84%. So the twin supports
+clone prioritization (Cell Biology genome sliders), parameter ranking (Sensitivity), a filing-ready
+design space (Q8 NOR/PAR), and a control strategy (PID on pCO₂) — the CMC arc, in one tool.
+
+**Scale-up framing:** the tool treats scale-up for glycan quality as a **CO₂-stripping problem
+disguised as an oxygen-transfer problem** — holding DO constant does not hold pCO₂ constant, and
+it is pCO₂ (→ carbonic acid → Golgi-lumen pH) that primarily moves the Fc glycan. CO₂ removal, not
+O₂ supply, is what fails first at large scale.
+
+## What's novel
+A 2021–2026 literature scan shows the pieces exist in **siloed** clusters — Golgi reaction-network
+models (usually offline, code-only), bioprocess digital twins (that rarely include glycosylation),
+mAb-glycosylation QbD frameworks, and a little AI-in-bioprocess work (that mostly doesn't touch
+glycans). GlycoTwin's contribution is the **integration**: a single interactive, mechanistic,
+agent-augmented twin running the whole molecule → CQA → control chain for antibody glycosylation,
+explainable and zero-install — a combination the current literature does not offer as one tool.
 
 ## Related work
 GlycoPy (Ma, Guo & Braatz, MIT — *Comput. Chem. Eng.* 2026) is a recent CasADi-based Python
