@@ -7,7 +7,7 @@
  * Structure/copy follow the Claude Design "Organic" handoff; real module tabs keep
  * their own content (this only restyles + restructures the Workflow landing).
  */
-import { useState } from 'react';
+import { useState, useEffect } from 'react';
 
 interface Step {
   n: number; tab: string; stage: string; title: string; sub: string;
@@ -53,6 +53,8 @@ const nn = (n: number) => String(n).padStart(2, '0');
 
 export function WorkflowView({ go }: { go: (tab: string) => void }) {
   const [step, setStep] = useState<number | null>(null);
+  // Overview↔detail and Prev/Next stay on one tab, so reset the scroll here too.
+  useEffect(() => { document.querySelector('.main')?.scrollTo({ top: 0 }); }, [step]);
   return step == null
     ? <Overview onPick={setStep} />
     : <Detail step={step} setStep={setStep} go={go} />;

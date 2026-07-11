@@ -1,4 +1,4 @@
-import { useState, useRef } from 'react';
+import { useState, useRef, useEffect } from 'react';
 import './ui/theme.css';
 import { defaultKnobs } from './model/engine';
 import type { Knobs } from './model/types';
@@ -42,6 +42,10 @@ export default function App() {
   const applyPreset = (partial: Partial<Knobs>) => setKnobs({ ...defaultKnobs(), ...partial });
 
   const fileRef = useRef<HTMLInputElement>(null);
+  const mainRef = useRef<HTMLElement>(null);
+  // A tab switch should land at the top of the new view, not inherit the previous
+  // tab's scroll position (the .main scroll container is reused across tabs).
+  useEffect(() => { mainRef.current?.scrollTo({ top: 0 }); }, [tab]);
   const onLoadFile = (e: React.ChangeEvent<HTMLInputElement>) => {
     const f = e.target.files?.[0];
     if (!f) return;
@@ -116,7 +120,7 @@ export default function App() {
           ))}
         </aside>}
 
-        <main className="main">
+        <main className="main" ref={mainRef}>
           {tab === 'wf' && <WorkflowView go={(t) => setTab(t as TabId)} />}
           {tab === 'bio' && <CellBiologyView knobs={knobs} />}
           {tab === 'mol' && <MoleculeView knobs={knobs} />}
