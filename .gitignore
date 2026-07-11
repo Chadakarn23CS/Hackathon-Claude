@@ -19,3 +19,7 @@ manuscripts/
 CLAUDE.md
 AGENTS.md
 .DS_Store
+
+# internal working docs — kept locally, not for public repo
+docs/SUBMISSION_demo_script.md
+docs/GlycoTwin_tab_review.md

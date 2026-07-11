@@ -19,13 +19,19 @@ embedding them in gradient-based dynamic optimization and **nonlinear MPC (NMPC)
 The demonstration application is the same problem GlycoTwin models: multiscale mAb N-glycosylation
 in CHO — a cell-culture submodel feeding a Golgi reaction-network submodel.
 
-## Independent convergence (validates GlycoTwin)
-GlycoPy's Golgi kinetics use the **same functional form** GlycoTwin derived from Jimenez del Val /
-Villiger: reaction rate = `kf · [oligosaccharide] · [nucleotide-sugar] · [enzyme] · Mn/(k_mn+Mn)`
-— enzyme × substrate-donor × Mn-cofactor. Two independent implementations landing on the same
-mechanism is a good sign our reduced model captures the right physics. GlycoPy's cell model also
-carries **ammonia inhibition and ammonia-driven death** (KI_Amm≈3.2 mM, Kd_Amm≈14.3 mM), which is
-consistent with the ammonia→Golgi-pH coupling we just added.
+## Shared physics, different fidelity
+Both models agree on the **drivers** of Golgi glycosylation — enzyme expression, nucleotide-sugar
+donor availability, and the Mn²⁺ cofactor — but they encode the enzyme rate laws at different
+fidelity. GlycoPy implements **three enzyme-specific kinetic mechanisms** (paper p.7): *"three
+reaction classes are implemented according to the kinetic mechanism: random-order Bi-Bi kinetics,
+sequential Bi-Bi kinetics, and Michaelis–Menten kinetics,"* with the kinetic type set per enzyme —
+so galactosyl- and GlcNAc-transferases use two-substrate Bi-Bi forms, not a single Michaelis term.
+GlycoTwin deliberately uses a **reduced single-substrate Michaelis form** (`enzyme × donor ×
+Mn-cofactor`, sequential build) — fewer states, closed-form, fast enough for a live browser twin.
+So this is not identical kinetics: it is agreement on **which levers matter**, with GlycoPy the
+higher-fidelity mechanistic reference and GlycoTwin the interactive reduced-order tool. GlycoPy's
+cell model also carries **ammonia inhibition and ammonia-driven death** (KI_Amm≈3.2 mM,
+Kd_Amm≈14.3 mM), consistent with the ammonia→Golgi-pH coupling we added.
 
 ## Where they differ (the honest comparison)
 

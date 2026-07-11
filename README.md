@@ -60,8 +60,9 @@ How to Use.
 ## Related work
 GlycoPy (Ma, Guo & Braatz, MIT — *Comput. Chem. Eng.* 2026) is a recent CasADi-based Python
 framework for hierarchical modeling and **NMPC** of the same CHO mAb-glycosylation problem. It
-independently uses the same enzyme × donor × Mn-cofactor Golgi kinetics GlycoTwin derives, which
-corroborates the mechanism. The two are complementary: GlycoPy is a research modeling/NMPC toolkit;
+agrees on the drivers of Golgi glycosylation (enzyme, nucleotide-sugar donor, Mn²⁺ cofactor),
+though at higher kinetic fidelity — GlycoPy uses enzyme-specific Bi-Bi rate laws where GlycoTwin
+uses a reduced Michaelis form. The two are complementary: GlycoPy is a research modeling/NMPC toolkit;
 GlycoTwin is an interactive, explainable, zero-install decision tool. Full comparison and adopted
 improvements: [`docs/RELATED_WORK_GlycoPy.md`](docs/RELATED_WORK_GlycoPy.md).
 
