@@ -1,63 +1,82 @@
+@import url('https://fonts.googleapis.com/css2?family=DM+Serif+Display:ital@0;1&family=Figtree:wght@400;500;600;700&display=swap');
+
 :root {
-  /* Editorial-botanical identity: warm cream canvas, high-contrast serif display type,
-     a muted sage/plum/clay palette, soft diffuse depth and generous rounded corners.
-     Dense data (numerals, charts, tables) stays in clean sans/mono for legibility. */
-  --bg: #f3eee3;          /* warm cream canvas */
-  --panel: #fffef9;       /* warm white card surface */
-  --panel-2: #f7f1e6;     /* recessed warm surface */
-  --border: #e7dece;      /* soft warm hairline */
-  --ink: #2f2a23;         /* warm near-black for display type */
-  --text: #38322b; --muted: #7c7368; --faint: #a99f90;
-  --accent: #5f7d5c;      /* muted sage — primary signature */
-  --accent-hi: #6f9268;   /* brighter sage for hover */
-  --accent-2: #8a76b3;    /* soft plum — secondary accent */
-  --warn: #b17f3d; --bad: #b25a41;
-  --good: #5f8b63; --grid: #efe7d9;
-  --in: #5f7d5c; --met: #8a76b3; --env: #b17f3d; --prec: #8a76b3; --gene: #9a8e7c;
-  /* soft, warm, diffuse depth — a real card lift, not a hairline */
-  --shadow: 0 4px 16px rgba(74,60,42,0.07), 0 1px 3px rgba(74,60,42,0.05);
-  --shadow-sm: 0 2px 8px rgba(74,60,42,0.05);
-  --r: 16px; --r-sm: 11px;  /* generous, soft rounded corners read "editorial", not "instrument" */
+  /* "Organic" design system (Claude Design handoff) — sage-primary variant.
+     Warm wheat app-frame on a darker ground, cream cards, editorial serif display,
+     Figtree body, pill controls, soft layered shadows. Dense data (numerals,
+     charts, tables) stays in clean sans/mono for legibility. */
+  --ground: #e9ddc6;      /* page ground behind the app frame */
+  --bg: #f5ead8;          /* wheat — the app-frame surface */
+  --panel: #f9f4ed;       /* card */
+  --panel-2: #fbf6ec;     /* softer card / recessed surface */
+  --surface: #ebddc5;     /* inputs / recessed controls */
+  --border: rgba(32,30,29,0.10);  /* warm hairline divider */
+  --ink: #201e1d;         /* display ink */
+  --text: #201e1d; --muted: #8c7f6a; --faint: #a19786;
+  --accent: #7a8a5e;      /* sage — primary (gt-primary) */
+  --accent-hi: #8fa073;   /* lighter sage (labels/hover) */
+  --accent-press: #56633f;/* sage pressed */
+  --accent-2: #c67139;    /* terracotta — secondary accent */
+  --accent-2-press: #8c491a;
+  --warn: #b2622d; --bad: #b2622d;
+  --good: #7a8a5e; --grid: #eee7db;
+  --note: #f0fae1;        /* sage note fill */
+  --in: #7a8a5e; --met: #c67139; --env: #b2622d; --prec: #8c491a; --gene: #a19786;
+  /* Organic elevation: soft ink-tinted layered shadows */
+  --shadow-sm: 0 1px 2px rgba(46,43,37,0.14);
+  --shadow-md: 0 3px 10px rgba(46,43,37,0.16);
+  --shadow: 0 3px 10px rgba(46,43,37,0.16);
+  --shadow-lg: 0 12px 32px rgba(46,43,37,0.22);
+  --r: 24px; --r-sm: 14px; --r-pill: 999px;  /* generous soft corners; pills for controls */
   --mono: ui-monospace, "SF Mono", "Cascadia Code", "Menlo", monospace;
-  --serif: "Hoefler Text", "Iowan Old Style", "Palatino Linotype", Palatino, "Book Antiqua", Georgia, "Times New Roman", serif;
-  --sans: "Inter", "Segoe UI", system-ui, -apple-system, sans-serif;
+  --serif: "DM Serif Display", Georgia, "Times New Roman", serif;
+  --sans: "Figtree", "Inter", "Segoe UI", system-ui, -apple-system, sans-serif;
   font-synthesis: none; -webkit-font-smoothing: antialiased; text-rendering: optimizeLegibility;
 }
 * { box-sizing: border-box; }
 html, body, #root { height: 100%; margin: 0; }
 body {
-  background: var(--bg); color: var(--text);
+  background: var(--ground); color: var(--text);
   font-family: var(--sans);
   font-size: 13.5px; line-height: 1.5;
 }
-.app { display: flex; flex-direction: column; height: 100vh; overflow: hidden; }
+#root { padding: 26px 22px; display: flex; justify-content: center; }
+/* Centered "app frame": a rounded wheat card floating on the darker ground. */
+.app { width: 100%; max-width: 1200px; margin: 0 auto;
+  background: var(--bg); border-radius: 30px; box-shadow: var(--shadow-lg);
+  border: 1px solid rgba(32,30,29,0.06);
+  display: flex; flex-direction: column; height: calc(100vh - 52px); overflow: hidden; }
+@media (max-width: 720px) {
+  #root { padding: 0; }
+  .app { border-radius: 0; height: 100vh; border: none; box-shadow: none; }
+}
 
 /* Header */
-.hdr { display: flex; align-items: center; gap: 14px; padding: 14px 24px;
-  background: var(--panel);
-  border-bottom: 1px solid var(--border); }
-.hdr h1 { font-family: var(--serif); font-size: 23px; font-weight: 600; margin: 0; letter-spacing: 0.1px; color: var(--ink);
-  display: flex; align-items: baseline; gap: 10px; }
-.hdr h1 .tm { font-size: 9px; font-weight: 700; color: var(--accent);
-  font-family: var(--sans); letter-spacing: 1.2px; text-transform: uppercase; align-self: center; }
-.hdr .brandmark { display: inline-flex; align-items: center; }
-.hdr .sub { color: var(--muted); font-size: 13px; margin-top: 3px; font-family: var(--serif); font-style: italic; letter-spacing: 0.1px; }
+.hdr { display: flex; align-items: center; gap: 16px; padding: 24px 28px 16px;
+  background: transparent; border-bottom: none; }
+.hdr h1 { font-family: var(--serif); font-size: 28px; font-weight: 400; margin: 0; letter-spacing: -0.01em; color: var(--ink);
+  display: flex; align-items: baseline; gap: 11px; line-height: 1; }
+.hdr h1 .tm { font-size: 10px; font-weight: 700; color: var(--accent-hi);
+  font-family: var(--sans); letter-spacing: 0.18em; text-transform: uppercase; align-self: center; }
+.hdr .brandmark { display: inline-flex; align-items: center; justify-content: center;
+  width: 46px; height: 46px; border-radius: 15px;
+  background: radial-gradient(120% 120% at 30% 25%, #aebf92, #7a8a5e); box-shadow: var(--shadow-sm); }
+.hdr .sub { color: var(--muted); font-size: 14px; margin-top: 4px; font-family: var(--sans); font-style: italic; letter-spacing: 0.1px; }
 .hdr .spacer { flex: 1; }
-.badge { font-size: 10px; padding: 3px 10px; border-radius: 20px; border: 1px solid var(--border);
-  color: var(--muted); background: var(--panel-2); font-family: var(--sans); font-weight: 600; letter-spacing: 0.3px; }
-.badge.ok { color: var(--accent); border-color: #cbdcc6; background: #eef3ec; }
+.badge { font-size: 11px; padding: 4px 12px; border-radius: var(--r-pill); border: none;
+  color: var(--muted); background: var(--panel); font-family: var(--sans); font-weight: 600; letter-spacing: 0.02em; }
+.badge.ok { color: var(--accent-press); background: var(--note); }
 
-/* Tabs */
-.tabs { display: flex; gap: 2px; padding: 0 14px; background: var(--panel);
-  border-bottom: 1px solid var(--border); overflow-x: auto; flex-wrap: wrap; }
-.tab { padding: 10px 13px; font-size: 12px; color: var(--muted); cursor: pointer;
-  user-select: none; white-space: nowrap; font-weight: 500; letter-spacing: 0.1px;
-  border-bottom: 2px solid transparent; margin-bottom: -1px;
-  transition: color 0.12s, border-color 0.12s, background 0.12s; }
-.tab:hover { color: var(--text); background: var(--panel-2); }
-.tab.active { color: var(--accent); font-weight: 650; border-bottom-color: var(--accent);
-  background: transparent; }
-.tab.active:hover { color: var(--accent); background: transparent; }
+/* Tabs — pills */
+.tabs { display: flex; gap: 7px; padding: 4px 28px 20px; background: transparent;
+  border-bottom: none; overflow-x: auto; flex-wrap: wrap; }
+.tab { padding: 9px 15px; font-size: 12.5px; color: #5b5449; cursor: pointer;
+  user-select: none; white-space: nowrap; font-weight: 600; letter-spacing: 0.1px;
+  border: none; border-radius: var(--r-pill); background: transparent;
+  transition: color 0.14s, background 0.14s; }
+.tab:hover { color: var(--ink); background: rgba(32,30,29,0.06); }
+.tab.active { color: #f5ead8; background: var(--accent); font-weight: 600; }
+.tab.active:hover { color: #f5ead8; background: var(--accent-press); }
 
 /* Layout */
 .body { display: flex; flex: 1; min-height: 0; }
@@ -104,11 +123,14 @@ body {
 
 /* Presets & buttons */
 .presets { display: flex; flex-wrap: wrap; gap: 6px; margin-bottom: 12px; }
-.btn { font-size: 11.5px; padding: 5px 10px; border-radius: var(--r-sm); cursor: pointer;
-  background: var(--panel-2); border: 1px solid var(--border); color: var(--text); }
-.btn:hover { border-color: var(--accent); color: var(--accent); }
-.btn.primary { background: var(--accent); color: #ffffff; border-color: var(--accent); font-weight: 600; }
-.btn.ghost { background: transparent; }
+.btn { font-size: 12px; padding: 7px 14px; border-radius: var(--r-pill); cursor: pointer;
+  background: var(--surface); border: 1px solid var(--border); color: var(--text);
+  transition: background 0.14s, color 0.14s, border-color 0.14s; }
+.btn:hover { border-color: var(--accent); color: var(--accent); background: var(--note); }
+.btn.primary { background: var(--accent); color: #f5ead8; border-color: transparent; font-weight: 600; }
+.btn.primary:hover { background: var(--accent-press); color: #f5ead8; border-color: transparent; }
+.btn.ghost { background: transparent; border-color: transparent; color: var(--accent); }
+.btn.ghost:hover { background: var(--note); }
 
 /* Tables */
 table.tbl { width: 100%; border-collapse: collapse; font-size: 12px; }
@@ -350,10 +372,10 @@ table.tbl td { font-variant-numeric: tabular-nums; }
 .met-list li { margin-bottom: 2px; }
 
 /* ---- Header scenario export/load buttons ---- */
-.hdr-btn { font-size: 11px; font-weight: 600; color: var(--muted); background: var(--panel-2);
-  border: 1px solid var(--border); border-radius: 20px; padding: 5px 12px; cursor: pointer;
-  font-family: var(--sans); letter-spacing: 0.2px; transition: background 0.12s, border-color 0.12s, color 0.12s; }
-.hdr-btn:hover { background: #eef3ec; border-color: var(--accent); color: var(--accent); }
+.hdr-btn { font-size: 11.5px; font-weight: 600; color: var(--text); background: var(--surface);
+  border: 1px solid var(--border); border-radius: var(--r-pill); padding: 6px 14px; cursor: pointer;
+  font-family: var(--sans); letter-spacing: 0.2px; transition: background 0.14s, border-color 0.14s, color 0.14s; }
+.hdr-btn:hover { background: var(--note); border-color: var(--accent); color: var(--accent-press); }
 
 /* ---- Guide two-lever pathway SVG ---- */
 .lever-svg { width: 100%; max-width: 720px; height: auto; margin: 8px 0 12px; display: block; }
