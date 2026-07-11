@@ -1,8 +1,21 @@
+# dependencies / build
 node_modules/
 .npm-cache/
 dist/
+*.tsbuildinfo
+.venv/
 __pycache__/
 *.pyc
-.venv/
-*.tsbuildinfo
+
+# copyrighted manuscripts — NEVER publish (institutional-license PDFs)
+manuscripts/
+*.pdf
+
+# local agent / editor state
+.claude/
+.omc/
+.vscode/
+.idea/
+CLAUDE.md
+AGENTS.md
 .DS_Store
