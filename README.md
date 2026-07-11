@@ -94,10 +94,14 @@ ADCC-enhanced clone); B4GALT1 overexpression → galactosylation 53 → 84%. So 
 clone prioritization (Cell Biology genome sliders), parameter ranking (Sensitivity), a filing-ready
 design space (Q8 NOR/PAR), and a control strategy (PID on pCO₂) — the CMC arc, in one tool.
 
-**Scale-up framing:** the tool treats scale-up for glycan quality as a **CO₂-stripping problem
-disguised as an oxygen-transfer problem** — holding DO constant does not hold pCO₂ constant, and
-it is pCO₂ (→ carbonic acid → Golgi-lumen pH) that primarily moves the Fc glycan. CO₂ removal, not
-O₂ supply, is what fails first at large scale.
+**Scale-up framing:** scale-up for glycan quality is a **CO₂-stripping problem, not an
+oxygen-transfer one** — holding DO constant does not hold pCO₂ constant, and it is CO₂ (not O₂)
+that changes at scale and sets Golgi-lumen pH. But the *net* effect on **harvest galactosylation
+is small — it is robust to scale**, because Golgi acidification is offset by slower-growth-extended
+Golgi residence (see [`research/FINDING.md`](research/FINDING.md)). What actually degrades at scale
+is **titer** (and pH-sensitive dynamics); **galactosylation is controlled upstream by clone
+(B4GALT1) and media (Mn²⁺/galactose), not by the gas strategy.** O₂ affects sialylation, not
+galactosylation.
 
 ## What's novel
 A 2021–2026 literature scan shows the pieces exist in **siloed** clusters — Golgi reaction-network

@@ -78,7 +78,8 @@ export function ScaleView({ knobs }: { knobs: Knobs }) {
         <div className="panel-title">Gas strategy — why "kLa" is not one number</div>
         <p className="prov-note">Scale-up for glycan quality is a <b>CO₂-stripping problem disguised as an oxygen-transfer
         problem.</b> O₂ and CO₂ have <i>separate</i> transfer coefficients that scale differently — holding DO does not
-        guarantee you are holding pCO₂, and it is pCO₂ that moves the glycan.</p>
+        guarantee you are holding pCO₂, and pCO₂ (not O₂) is the scale-relevant Golgi gas. Its <i>net</i> effect on harvest
+        galactosylation is small (buffered by the growth–residence offset); it surfaces mainly in titer and pH-sensitive dynamics.</p>
         <table className="scale-tbl">
           <thead><tr><th>Transfer process</th><th>Direction</th><th>Driven by</th><th>Scale-up behaviour</th><th>Glycan relevance</th></tr></thead>
           <tbody>
@@ -87,7 +88,7 @@ export function ScaleView({ knobs }: { knobs: Knobs }) {
               <td>indirect — low DO trims sialylation (energy)</td></tr>
             <tr><td><b>kLa · CO₂</b> (stripping)</td><td>out of broth</td><td>total gas throughput carrying CO₂ away</td>
               <td>CO₂ is highly soluble and cell-produced → removal-limited; <b>fails first at large scale</b> (tall column, low surface:volume, sparge capped by shear/foam)</td>
-              <td><b>direct — the master lever</b>: pCO₂ → carbonic acid → Golgi lumen pH → galactosylation</td></tr>
+              <td>the scale-relevant Golgi gas (pCO₂ → carbonic acid → lumen pH), but <b>net harvest galactosylation is buffered</b> — slower growth lengthens Golgi residence and offsets the pH drop; the cost shows up in <b>titer</b> and pH-sensitive dynamics</td></tr>
             <tr><td><b>Sparged (bottom) gas</b></td><td>both</td><td>rising bubbles, high interfacial area</td>
               <td>high kLa for O₂ <i>and</i> CO₂ — but foam/shear cap the rate; micro-spargers strip CO₂ <i>poorly</i> (tiny bubbles saturate)</td>
               <td>coarser bubbles strip CO₂ better; a real tradeoff vs O₂ supply</td></tr>
@@ -97,8 +98,10 @@ export function ScaleView({ knobs }: { knobs: Knobs }) {
           </tbody>
         </table>
         <p className="prov-note"><b>The asymmetry:</b> at 2000 L you often have <i>enough</i> O₂ kLa but <i>insufficient</i>
-        CO₂ stripping — so DO holds while pCO₂ climbs to 80–150 mmHg, acidifying the medium and Golgi. That is the scale-up
-        failure mode for galactosylation, and why the Scale-Up presets vary <code>kLa_CO2</code> specifically.</p>
+        CO₂ stripping — so DO holds while pCO₂ climbs to 80–150 mmHg, acidifying the medium and Golgi. That primarily costs
+        <b>titer</b> and stresses pH control; harvest galactosylation stays robust (the growth–residence offset), so
+        galactosylation control lives in <b>clone (B4GALT1) and media (Mn²⁺/galactose)</b>. The presets vary
+        <code>kLa_CO2</code> because it is the gas that actually changes with scale.</p>
         <div className="panel-title" style={{ marginTop: 10 }}>Five levers for successful scale-up with good glycosylation</div>
         <ul className="guide-list">
           <li><b>Control pCO₂ directly, not just DO</b> — match effective CO₂ removal across scale, not only oxygen supply.</li>
