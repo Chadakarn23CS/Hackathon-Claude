@@ -9,8 +9,9 @@ Couples:
 
 Parameters are literature-directed and calibrated to reproduce canonical CHO
 fed-batch behaviour and established glycosylation responses. Educational use.
-This is the validated reference for the JavaScript engine in cqa_explorer.html
-(RK4 at 1-h steps reproduces LSODA to <0.15%).
+This is the validated reference for the TypeScript engine in
+cqa-studio/src/model/engine.ts, shipped built as glycotwin_app.html
+(RK4 at 1-h steps reproduces LSODA to <0.18%).
 """
 import numpy as np
 from scipy.integrate import solve_ivp

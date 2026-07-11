@@ -9,8 +9,9 @@ Couples:
 
 Parameters are literature-directed and calibrated to reproduce canonical CHO
 fed-batch behaviour and established glycosylation responses. Educational use.
-This is the validated reference for the JavaScript engine in cqa_explorer.html
-(RK4 at 1-h steps reproduces LSODA to <0.15%).
+This is the validated reference for the TypeScript engine in
+cqa-studio/src/model/engine.ts, shipped built as glycotwin_app.html
+(RK4 at 1-h steps reproduces LSODA to <0.18%).
 """
 import numpy as np
 from scipy.integrate import solve_ivp
@@ -57,11 +58,19 @@ def run_bioreactor(p, days=13):
     return solve_ivp(bioreactor_rhs,[0,days*24],y0,args=(p,),
         t_eval=np.linspace(0,days*24,days*24+1),method="LSODA",rtol=1e-6,atol=1e-8)
 
-def golgi_pH(pCO2,pH_set):   return (pH_set-0.55)-0.0045*max(pCO2-40,0)
+def golgi_pH(pCO2,pH_set,Amm=0.0):
+    # Golgi lumen pH: acidified below bulk (offset), further acidified by dissolved CO2,
+    # and ALKALINIZED by elevated ammonia (Villiger 2016 Part II, Henderson-Hasselbalch:
+    # NH3 diffuses in and raises luminal pH, depressing the transferases -> less galactose;
+    # Part I shows high ammonia -> nearly nongalactosylated glycans). Anchored at 8.5 mM
+    # (just above the baseline ammonia peak ~8.1) so the calibrated baseline is unchanged;
+    # only ELEVATED ammonia lifts pH. Saturating, capped at +0.9 pH (Villiger's 30 mM range).
+    d_amm=0.9*(1.0-np.exp(-max(Amm-8.5,0.0)/12.0))
+    return (pH_set-0.55)-0.0045*max(pCO2-40,0)+d_amm
 def enz_pH_factor(pH,opt,sig=0.75): return np.exp(-((pH-opt)**2)/(2*sig**2))
 
 def glycosylation_cqa(state, p):
-    pH=golgi_pH(state["pCO2"],p["pH_set"]); tau=p["tauG"]/(1+p["ktau_mu"]*state["mu"]/p["mu_max"])
+    pH=golgi_pH(state["pCO2"],p["pH_set"],state.get("Amm",0.0)); tau=p["tauG"]/(1+p["ktau_mu"]*state["mu"]/p["mu_max"])
     cofMn=0.4+0.6*michaelis(state["Mn"],p["KMn"])
     act=lambda b,e,o,s,K,c=1.0: b*e*enz_pH_factor(pH,o)*michaelis(s,K)*c
     a_gnt=act(p["k_gnt"],state["MGAT"],6.5,state["UDPGlcNAc"],p["K_glcnac"],cofMn)

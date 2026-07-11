@@ -1,8 +1,11 @@
-"""Model service — the single source of truth.
+"""Model service — the server-side source of truth.
 
 Imports the reference Python model (cho_cqa_model.py) directly and exposes the
-computations the app needs. No JS port, no fixture sync: the physics lives in
-exactly one place.
+computations the API needs. The offline app ships a separate TypeScript port
+of the same physics (cqa-studio/src/model/engine.ts); the two are kept in
+lock-step by the frozen fixture suite (gen_fixtures.py -> engine.test.ts). The
+per-timepoint growth rate feeding the Golgi residence term is computed here
+identically to that reference so the API and the browser app agree.
 """
 from __future__ import annotations
 import sys, os, math
@@ -61,7 +64,11 @@ def simulate(knobs: dict[str, float], days: int = 13) -> dict[str, Any]:
     for i in range(n):
         i0, i1 = max(0, i - 1), min(n - 1, i + 1)
         dt_h = t[i1] - t[i0]
-        mu = (math.log(max(Xv[i1], 1e-9)) - math.log(max(Xv[i0], 1e-9))) / dt_h if dt_h > 0 else 0.0
+        # growth rate for the Golgi residence term: match the reference generator
+        # (gen_fixtures.py) and the TS engine exactly — add mu_d, clamp to [0, mu_max]
+        # off the log-derivative of viable cell density (1e-3 floor).
+        dln = math.log(max(Xv[i1], 1e-3)) - math.log(max(Xv[i0], 1e-3))
+        mu = min(max(dln / dt_h + p["mu_d"], 0.0), p["mu_max"]) if dt_h > 0 else 0.0
         st = _glyco_state(k, Glc[i], Gln[i], Gal[i], pCO2[i], mu, Amm[i])
         _, cqa = cm.glycosylation_cqa(st, gp_tau)
         for key in GLYCO_KEYS:

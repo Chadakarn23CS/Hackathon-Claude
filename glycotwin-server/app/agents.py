@@ -109,15 +109,24 @@ def optimize(target: dict[str, float], rounds: int = 4, model: str | None = None
 
 
 def _coordinate_step(target, best, history):
-    """Keyless fallback: nudge the most-off CQA's dominant knob."""
-    h = best["harvest"]; knobs = dict(best["knobs"])
+    """Keyless fallback: nudge the most-off CQA's dominant knob.
+
+    Walks from the LAST point tried (not only the best), so a round that fails
+    to improve still advances the search instead of re-proposing an identical
+    point. The per-knob step decays as tries on that knob accumulate, so the
+    walk converges (and settles cleanly when a knob is pinned at its bound)
+    rather than oscillating or stalling.
+    """
     # map each CQA to its primary lever + direction
     drivers = {"galactosylation": ("B4GALT", +1), "afucosylation": ("FUT8", -1),
                "sialylation": ("ST6GAL", +1), "high_mannose": ("asn_level", +1)}
+    ref = history[-1] if history else {"knobs": dict(best["knobs"]), "harvest": best["harvest"]}
+    h = ref["harvest"]; knobs = dict(ref["knobs"])
     worst = max(target, key=lambda k: abs(h.get(k, 0) - target[k]) if k in h else 0)
     knob, sign = drivers.get(worst, ("B4GALT", +1))
     cur = knobs.get(knob, ms.DEFAULT_KNOBS.get(knob, 1.0))
     need = target[worst] - h.get(worst, 0)
-    step = sign * (0.15 if need > 0 else -0.15) * max(abs(cur), 0.5)
+    tries = sum(1 for e in history if e.get("rationale", "").startswith(f"coordinate step on {knob} "))
+    step = sign * (0.15 if need > 0 else -0.15) * max(abs(cur), 0.5) * 0.6 ** tries
     knobs[knob] = cur + step
     return {"knobs": knobs, "rationale": f"coordinate step on {knob} to move {worst}"}

@@ -71,7 +71,7 @@ How to Use.
 - Contains **no proprietary or company-specific data**. Product-specific calibration happens
   locally via the `cho-cqa-recalibrate` Claude Science skill and is never included in this build.
 - Models **N-linked glycosylation** of the IgG1 Fc glycan (Asn297). O-glycosylation is out of scope.
-- The JavaScript engine reproduces its Python reference to ≤0.17% (36 automated tests).
+- The JavaScript engine reproduces its Python reference to ≤0.18% (36 automated tests across 13 scenarios).
 - Every parameter and mechanism is traced to its source in [`docs/PARAMETER_PROVENANCE.md`](docs/PARAMETER_PROVENANCE.md).
 
 ## Where it fits in antibody drug development
