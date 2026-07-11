@@ -200,6 +200,11 @@ export function CellBiologyView({ knobs }: { knobs: Knobs }) {
               relation). In a real bioreactor the pH loop even <b>sparges CO₂ to pull an alkaline broth pH down</b> — the
               same CO₂ pool that then feeds the lumen. So the glycan tracks Golgi lumen pH, driven by CO₂, which is in
               turn coupled to broth pH — not broth pH acting directly on the enzymes.</li>
+            <li><b>Ammonia {bv.Amm.toFixed(1)} mM — the opposite push on Golgi pH:</b> NH₃ diffuses into the lumen and
+              <i>raises</i> its pH (Henderson–Hasselbalch), driving the transferases off their acidic optimum — so
+              high ammonia depresses galactosylation and sialylation (Villiger 2016: severe accumulation → nearly
+              nongalactosylated glycans). It stays neutral until it climbs above the normal peak (~8&nbsp;mM), so a
+              high glutamine feed or poor ammonia clearance becomes a real glycan lever late in the batch.</li>
             <li><b>Transit time {bv.tau.toFixed(0)} min</b> — faster growth or a temperature up-shift shortens
               residence, so glycans exit less mature (more Man5 / G0F).</li>
             <li><b>Mn²⁺ {bv.Mn.toFixed(2)} — why it gets its own knob:</b> it is the <i>catalytic cofactor</i> in the

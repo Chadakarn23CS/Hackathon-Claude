@@ -30,7 +30,7 @@ export interface Expression {
 
 /** Instantaneous state fed to the glycosylation network. */
 export interface GlyState {
-  pCO2: number; mu: number; Mn: number;
+  pCO2: number; Amm?: number; mu: number; Mn: number;
   UDPGlcNAc: number; UDPGal: number; GDPFuc: number; CMPNeuAc: number;
   MGAT: number; B4GALT: number; FUT8: number; ST6GAL: number;
 }

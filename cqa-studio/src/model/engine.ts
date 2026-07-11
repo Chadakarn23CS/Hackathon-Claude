@@ -122,13 +122,20 @@ export function integrate(p: BioParams, days = 13): { t: number[]; y: number[][]
 }
 
 // ---- Golgi glycosylation network ----
-export const golgiPH = (pCO2: number, pH_set: number): number =>
-  (pH_set - 0.55) - 0.0045 * Math.max(pCO2 - 40, 0);
+// Golgi lumen pH: acidified vs bulk (offset), further by dissolved CO2, and
+// ALKALINIZED by elevated ammonia (Villiger 2016 Part II, Henderson-Hasselbalch:
+// NH3 raises luminal pH -> transferases off-optimum -> less galactose; Part I:
+// high ammonia -> nearly nongalactosylated glycans). Anchored at 8.5 mM (just above
+// the baseline ammonia peak ~8.1) so the calibrated baseline is unchanged; saturating,
+// capped +0.9 pH over Villiger's ~30 mM range.
+export const golgiPH = (pCO2: number, pH_set: number, Amm = 0): number =>
+  (pH_set - 0.55) - 0.0045 * Math.max(pCO2 - 40, 0)
+    + 0.9 * (1 - Math.exp(-Math.max(Amm - 8.5, 0) / 12));
 const enzPH = (pH: number, opt: number): number => Math.exp(-((pH - opt) ** 2) / (2 * 0.75 ** 2));
 
 /** Advance a glycan cohort through the Golgi enzyme train; return distribution + CQAs. */
 export function glyco(st: GlyState, p: GlyParams): { g: GlycanDist; cqa: CQA } {
-  const pH = golgiPH(st.pCO2, p.pH_set);
+  const pH = golgiPH(st.pCO2, p.pH_set, st.Amm ?? 0);
   const tau = p.tauG / (1 + p.ktau_mu * st.mu / p.mu_max);
   const cofMn = 0.4 + 0.6 * michaelis(st.Mn, p.KMn);
   const act = (b: number, e: number, o: number, sub: number, K: number, c = 1.0) =>
@@ -230,7 +237,7 @@ export function simulate(
     poolsT.UDPGlcNAc.push(pools.UDPGlcNAc); poolsT.UDPGal.push(pools.UDPGal);
     poolsT.GDPFuc.push(pools.GDPFuc); poolsT.CMPNeuAc.push(pools.CMPNeuAc);
     const st: GlyState = {
-      pCO2: pCO2[i], mu: mu[i], Mn, ...pools,
+      pCO2: pCO2[i], Amm: Amm[i], mu: mu[i], Mn, ...pools,
       MGAT: expr.MGAT, B4GALT: expr.B4GALT, FUT8: expr.FUT8, ST6GAL: expr.ST6GAL,
     };
     const r = glyco(st, glyM);
@@ -288,7 +295,7 @@ export interface BioViewEnzyme {
   supply: number;     // relative nucleotide-sugar pool feeding this enzyme
 }
 export interface BioView {
-  pCO2: number; pHgolgi: number; tau: number; Mn: number;
+  pCO2: number; Amm: number; pHgolgi: number; tau: number; Mn: number;
   DO: number; lactate: number; oxIndex: number; // mitochondrial / energy state
   pools: Pools;
   enzymes: BioViewEnzyme[];
@@ -325,7 +332,8 @@ export function bioView(k: Knobs, days = 13): BioView {
   const oxIndex = Math.max(0, Math.min(1.2, doF_ox * (1 / (1 + lactate / 40))));
   const mods = glyMods(k);
   const pools = nucPools(Glc, Gln, Gal, mods.asn_level, mods.DO);
-  const pH = golgiPH(pCO2, p.pH_set);
+  const Amm = wmean(sim.Amm);
+  const pH = golgiPH(pCO2, p.pH_set, Amm);
   const tau = (p.tauG / (1 + p.ktau_mu * mu / p.mu_max)) * mods.tau_f;
   const cofMn = 0.4 + 0.6 * michaelis(k.Mn, p.KMn);
   const enzPHf = (opt: number) => Math.exp(-((pH - opt) ** 2) / (2 * 0.75 ** 2));
@@ -355,7 +363,7 @@ export function bioView(k: Knobs, days = 13): BioView {
   });
 
   return {
-    pCO2, pHgolgi: pH, tau, Mn: k.Mn, DO: k.DO, lactate, oxIndex, pools, enzymes,
+    pCO2, Amm, pHgolgi: pH, tau, Mn: k.Mn, DO: k.DO, lactate, oxIndex, pools, enzymes,
     glycan: sim.glycanT[n - 1], harvest: sim.harvest,
     titer: sim.titer, peakVCD: sim.peakVCD,
   };

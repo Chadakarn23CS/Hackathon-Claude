@@ -34,14 +34,14 @@ def _bio_params(k: dict[str, float]):
     return p
 
 
-def _glyco_state(k, Glc, Gln, Gal_ext, pCO2, mu):
+def _glyco_state(k, Glc, Gln, Gal_ext, pCO2, mu, Amm=0.0):
     """Assemble the state dict glycosylation_cqa expects: nucleotide pools +
     gene multipliers + cofactor + residence inputs. Gene effects enter via
     state (MGAT/B4GALT/FUT8/ST6GAL), exactly as the reference model does."""
     pools = cm.nucleotide_pools(Glc, Gln, Gal_ext, asn_level=k["asn_level"], DO=k["DO"])
     tau_f = math.exp(-0.045 * (k["Tset"] - 37.0))  # temperature -> residence
     return {
-        "pCO2": pCO2, "mu": max(mu, 0.0), "Mn": k["Mn"],
+        "pCO2": pCO2, "Amm": Amm, "mu": max(mu, 0.0), "Mn": k["Mn"],
         "MGAT": k["MGAT"], "B4GALT": k["B4GALT"], "FUT8": k["FUT8"], "ST6GAL": k["ST6GAL"],
         **pools, "_tau_f": tau_f,
     }
@@ -62,7 +62,7 @@ def simulate(knobs: dict[str, float], days: int = 13) -> dict[str, Any]:
         i0, i1 = max(0, i - 1), min(n - 1, i + 1)
         dt_h = t[i1] - t[i0]
         mu = (math.log(max(Xv[i1], 1e-9)) - math.log(max(Xv[i0], 1e-9))) / dt_h if dt_h > 0 else 0.0
-        st = _glyco_state(k, Glc[i], Gln[i], Gal[i], pCO2[i], mu)
+        st = _glyco_state(k, Glc[i], Gln[i], Gal[i], pCO2[i], mu, Amm[i])
         _, cqa = cm.glycosylation_cqa(st, gp_tau)
         for key in GLYCO_KEYS:
             cqaT[key].append(float(cqa[key]))
