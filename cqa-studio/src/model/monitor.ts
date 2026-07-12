@@ -93,10 +93,16 @@ export function monitor(knobs: Knobs, meas: Measurement, days = 13): MonitorResu
     galResid = meas.galactosylation - galTraj[di];
     residuals['Galactosylation'] = { pred: galTraj[di], meas: meas.galactosylation, resid: galResid };
   } else if (residuals['pCO2']) {
-    // local pCO2->gal sensitivity from a small finite difference on the trajectory
-    const dpc = residuals['pCO2'].resid;
-    // higher pCO2 -> lower Golgi pH -> lower galactosylation (empirical local slope ~ -0.03 %/mmHg)
-    galResid = -0.03 * dpc;
+    // Model-DERIVED local sensitivity d(harvest galactosylation)/d(pCO2), via a small kLa_CO2
+    // perturbation (kLa_CO2 is what moves pCO2). Using the model's own slope keeps the twin
+    // consistent with it — the net harvest effect is small/buffered (Golgi acidification is
+    // offset by slower-growth-extended residence), not the large negative a hard-coded slope implies.
+    const up = simulateKnobs({ ...knobs, kLa_CO2: knobs.kLa_CO2 * 0.9 }, days); // less stripping → higher pCO2
+    const dn = simulateKnobs({ ...knobs, kLa_CO2: knobs.kLa_CO2 * 1.1 }, days); // more stripping → lower pCO2
+    const dPco2 = up.pCO2max - dn.pCO2max;
+    const slope = Math.abs(dPco2) > 1e-6
+      ? (up.harvest.galactosylation - dn.harvest.galactosylation) / dPco2 : 0;
+    galResid = slope * residuals['pCO2'].resid;
   }
   const galCorr = correct(galTraj, galResid);
   // corrected harvest = nominal harvest shifted by the persisted galactosylation bias.

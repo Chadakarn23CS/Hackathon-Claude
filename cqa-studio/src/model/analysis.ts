@@ -50,10 +50,13 @@ export interface Sensitivity { knob: KnobKey; low: number; high: number; range: 
 export function sensitivity(base: Knobs, cqa: CQAKey, knobs: KnobKey[], frac = 0.15): Sensitivity[] {
   const r0 = readHarvest(simulateKnobs(base), cqa);
   const out: Sensitivity[] = knobs.map((kk) => {
-    const lo = { ...base, [kk]: base[kk] * (1 - frac) } as Knobs;
-    const hi = { ...base, [kk]: base[kk] * (1 + frac) } as Knobs;
-    const low = readHarvest(simulateKnobs(lo), cqa) - r0;
-    const high = readHarvest(simulateKnobs(hi), cqa) - r0;
+    // Multiplicative ±frac for a nonzero baseline; for a ZERO baseline (e.g. Fgal=0) a purely
+    // multiplicative step stays 0 and hides a real lever, so use an absolute step (0 → +frac)
+    // clamped at the physical floor — matching the server's /api/sensitivity fix.
+    const loVal = Math.max(base[kk] ? base[kk] * (1 - frac) : 0, 0);
+    const hiVal = base[kk] ? base[kk] * (1 + frac) : frac;
+    const low = readHarvest(simulateKnobs({ ...base, [kk]: loVal } as Knobs), cqa) - r0;
+    const high = readHarvest(simulateKnobs({ ...base, [kk]: hiVal } as Knobs), cqa) - r0;
     return { knob: kk, low, high, range: Math.abs(high - low) };
   });
   return out.sort((a, b) => b.range - a.range);
@@ -77,8 +80,8 @@ export function interactions(base: Knobs, cqa: CQAKey, knobs: KnobKey[], frac = 
   for (let i = 0; i < n; i++) {
     for (let j = i + 1; j < n; j++) {
       const a = knobs[i], b = knobs[j];
-      const ap = base[a] * (1 + frac), am = base[a] * (1 - frac);
-      const bp = base[b] * (1 + frac), bm = base[b] * (1 - frac);
+      const ap = base[a] ? base[a] * (1 + frac) : frac, am = Math.max(base[a] ? base[a] * (1 - frac) : 0, 0);
+      const bp = base[b] ? base[b] * (1 + frac) : frac, bm = Math.max(base[b] ? base[b] * (1 - frac) : 0, 0);
       const I = (ev({ [a]: ap, [b]: bp }) - ev({ [a]: ap, [b]: bm })
         - ev({ [a]: am, [b]: bp }) + ev({ [a]: am, [b]: bm })) / 4;
       matrix[i][j] = I; matrix[j][i] = I;

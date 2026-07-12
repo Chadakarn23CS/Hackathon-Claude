@@ -149,8 +149,8 @@ export function MonitorView({ knobs }: { knobs: Knobs }) {
           />
           <div className="panel-note">Each bar is how far a measured channel sits from the model's prediction at
             today. <b>Blue = above plan, red = below.</b> A non-zero bias is what the twin carries forward into the
-            harvest forecast: a positive pCO₂ residual, for example, propagates to a lower galactosylation forecast.
-            Bars near zero mean the batch is tracking the model — the twin and reality agree.</div>
+            harvest forecast — a pCO₂ residual propagates through the model's <i>own</i> (small, buffered)
+            pCO₂→galactosylation slope, not a hard-coded one. Bars near zero mean the batch is tracking the model.</div>
         </div>
       )}
     </div>
