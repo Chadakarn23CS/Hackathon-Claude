@@ -63,9 +63,12 @@ function score(h: Record<string, number>, target: Record<string, number>): numbe
   return Object.keys(target).reduce((s, k) => (k in h ? s + (h[k] - target[k]) ** 2 : s), 0);
 }
 
-function coordinateStep(target: Record<string, number>, best: LocalOptResult['best']):
+/** A point the search has actually visited (knobs + the harvest they produced). */
+type Point = { knobs: Record<string, number>; harvest: Record<string, number> };
+
+function coordinateStep(target: Record<string, number>, from: Point, decay: number):
   { knobs: Record<string, number>; rationale: string } {
-  const h = best.harvest; const knobs = { ...best.knobs };
+  const h = from.harvest; const knobs = { ...from.knobs };
   const base = defaultKnobs() as unknown as Record<string, number>;
   // worst CQA = biggest deviation from target
   let worst = Object.keys(target)[0]; let wd = -1;
@@ -77,7 +80,11 @@ function coordinateStep(target: Record<string, number>, best: LocalOptResult['be
   const [knob, sign] = DRIVERS[worst] ?? ['B4GALT', +1];
   const cur = knobs[knob] ?? base[knob] ?? 1.0;
   const need = target[worst] - (h[worst] ?? 0);
-  const stepMag = (need > 0 ? 0.15 : -0.15) * Math.max(Math.abs(cur), 0.5);
+  // Step from the LAST visited point with a DECAYING magnitude. Walking from the last
+  // point (not always the incumbent best) plus a shrinking step means a round that fails
+  // to improve can't re-propose the identical candidate forever — the same stall fix
+  // applied to the backend agent (agents.py _coordinate_step).
+  const stepMag = (need > 0 ? 0.15 : -0.15) * Math.max(Math.abs(cur), 0.5) * decay;
   knobs[knob] = cur + sign * stepMag;
   return { knobs, rationale: `coordinate step on ${knob} to move ${worst} toward target` };
 }
@@ -87,9 +94,13 @@ export function optimizeLocal(target: Record<string, number>, rounds = 4): Local
   const history: OptEntry[] = [];
   let best: LocalOptResult['best'] = { knobs: {}, harvest: harvestOf({}), score: 0 };
   best.score = score(best.harvest, target);
+  // Advance the search from wherever we actually landed last round (not always `best`),
+  // so an overshoot is followed by a smaller, different step rather than an identical retry.
+  let last: Point = { knobs: best.knobs, harvest: best.harvest };
 
   for (let r = 0; r < rounds; r++) {
-    const prop = coordinateStep(target, best);
+    const decay = Math.pow(0.7, r); // step shrinks each round → refine toward target, don't oscillate
+    const prop = coordinateStep(target, last, decay);
     const knobs = clip(prop.knobs) as unknown as Record<string, number>;
     // keep only the knobs that differ from default so the display stays readable
     const shown: Record<string, number> = {};
@@ -98,6 +109,7 @@ export function optimizeLocal(target: Record<string, number>, rounds = 4): Local
     const harvest = harvestOf(knobs);
     const sc = score(harvest, target);
     history.push({ round: r, knobs: shown, harvest, score: sc, rationale: prop.rationale });
+    last = { knobs: shown, harvest }; // always advance from where we landed, improved or not
     if (sc < best.score) best = { knobs: shown, harvest, score: sc };
     if (sc < 0.5) break;
   }
