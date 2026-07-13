@@ -33,3 +33,7 @@ demo/demo.mp4
 demo/node_modules/
 demo/package*.json
 /tmp/
+
+# submission video — host as a GitHub Release asset, not a committed file
+submission/demo.mp4
+*.mp4

@@ -11,6 +11,16 @@ Glycosylation is driven by its two real control levers — **Golgi enzymes** and
 **▶ Live app (no install):** https://chadakarn23cs.github.io/Hackathon-Claude/ — opens the full
 tool in the browser; every tab, including Agent Optimize, runs client-side.
 
+## Demo
+
+<!-- To embed: draft a GitHub Release, drag demo.mp4 in, copy the github.com/user-attachments/… URL,
+     and paste it below on its own line — GitHub renders an inline player. -->
+
+_3-minute walkthrough — the finding, the mechanism, and the tool that produced it._
+**▶ Watch:** _(video link — paste the release asset URL here)_
+
+See [`submission/`](submission/) for the required hackathon deliverables (video, summary, repo).
+
 ## Research finding — what actually controls Fc-galactosylation across scale?
 **A common mental model in CHO manufacturing is wrong.** The assumption that Fc-galactosylation
 degrades at manufacturing scale because dissolved CO₂ accumulates (poorer stripping → carbonic
