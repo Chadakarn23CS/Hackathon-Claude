@@ -87,7 +87,7 @@ export default function App() {
         <button className="hdr-btn" title="Load a previously exported scenario file to restore its operating point"
           onClick={() => fileRef.current?.click()}>↑ Load</button>
         <input ref={fileRef} type="file" accept="application/json,.json" style={{ display: 'none' }} onChange={onLoadFile} />
-        <button className="hdr-btn" title="Replay the guided tour" onClick={() => setTourSignal((s) => s + 1)}>◎ Tour</button>
+        <button className="hdr-btn" title="Replay the guided tour" onClick={() => setTourSignal((s) => s + 1)}>◎ Guided tour</button>
         <span className="badge ok">port ≤0.17%</span>
         <span className="badge">literature-parameterized</span>
       </header>

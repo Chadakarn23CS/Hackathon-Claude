@@ -22,8 +22,8 @@ const STEPS: TStep[] = [
     body: 'The secreted glycan and its CQAs recompute from the mechanistic model as you move the knobs — no waiting for an assay.', place: 'top' },
   { sel: '.hdr-btn', title: 'Save & share a scenario',
     body: 'Export the current operating point (knobs + predicted CQAs + provenance) as a reproducible JSON, or load one back.', place: 'bottom' },
-  { sel: '.tabs', title: 'That’s the tour',
-    body: 'Explore freely. Replay this anytime from the “Tour” button up top.', place: 'bottom' },
+  { sel: '.tabs', title: 'That’s the guided tour',
+    body: 'Explore freely. Replay this anytime from the “Guided tour” button up top.', place: 'bottom' },
 ];
 
 const SEEN_KEY = 'glycotwin_tour_v1';
@@ -96,7 +96,7 @@ export function TourGuide({ tab, setTab, signal }: { tab: string; setTab: (t: st
         <div className="tour-t">{step.title}</div>
         <div className="tour-b">{step.body}</div>
         <div className="tour-row">
-          <button className="tour-skip" onClick={finish}>Skip tour</button>
+          <button className="tour-skip" onClick={finish}>Skip guided tour</button>
           <div className="tour-nav">
             {i > 0 && <button className="btn ghost" onClick={() => setI(i - 1)}>← Back</button>}
             <button className="btn primary" onClick={() => (last ? finish() : setI(i + 1))}>{last ? 'Done' : 'Next →'}</button>
