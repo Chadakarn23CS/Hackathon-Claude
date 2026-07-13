@@ -1,17 +1,18 @@
-# Written summary (180 words)
+# Written summary (181 words)
 
 **GlycoTwin — a mechanistic digital twin for antibody glycosylation**
 
-A common mental model in CHO manufacturing says Fc-galactosylation degrades at scale
-because dissolved CO₂ accumulates, acidifying the Golgi and slowing galactosyltransferase.
-We tested that *in silico* with a mechanistic, literature-parameterized CHO fed-batch →
-Golgi → glycan model (no data fitting), driven by an agentic experiment loop — and the
-mechanism disagrees. Across bench → manufacturing, as pCO₂ rises 60 → 74 mmHg,
-galactosylation is **robust** (+1 pp), because the Golgi pH straddles the galactosyltransferase
-pH optimum (~6.4) where the pH–activity curve is flat. Dissolved O₂ moves galactosylation
-0 pp. The lever that actually recovers galactosylation at 2000 L is the **clone** (B4GALT1,
-+35 pp), not the gas strategy. The practical implication: at scale-up, spend control effort
-on clone and media, not CO₂ stripping.
+What actually controls Fc-galactosylation across scale? Our mechanistic model says the
+**clone dominates the process by ~35×**: B4GALT1 expression moves galactosylation +35 pp,
+while every scale-related process parameter — CO₂ stripping, dissolved O₂ — moves it ~1 pp
+or less. This overturns a common CHO mental model that galactosylation degrades at scale
+because dissolved CO₂ acidifies the Golgi and slows galactosyltransferase. We tested that
+*in silico* with a literature-parameterized CHO fed-batch → Golgi → glycan model (no data
+fitting), driven by an agentic experiment loop. As pCO₂ rises 60 → 74 mmHg bench →
+manufacturing, galactosylation is **robust** (+1 pp) — because Golgi pH straddles the
+galactosyltransferase pH optimum (~6.4) where the pH–activity curve is flat; dissolved O₂
+moves it 0 pp. The practical implication: at scale-up, spend control effort on clone and
+media, not CO₂ stripping.
 
 The finding is reproducible (`research/reproduce.sh`), mechanistically transparent, and
 grounded entirely in public literature. It was produced with GlycoTwin — a single-file,
