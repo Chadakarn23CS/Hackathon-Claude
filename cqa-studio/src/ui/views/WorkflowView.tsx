@@ -66,7 +66,7 @@ function Overview({ onPick }: { onPick: (n: number) => void }) {
     <div className="view wf">
       <div className="wf-hero">
         <div className="wf-kicker">The Workflow</div>
-        <h2 className="wf-headline">From molecule to decision</h2>
+        <h2 className="wf-headline">From Molecule to Decision</h2>
         <p className="wf-lede">
           One connected thread. Each stage feeds the next — the glycan you engineer is set
           upstream by the cell and the batch, then judged downstream as a CQA and held by
