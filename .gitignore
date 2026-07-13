@@ -37,3 +37,4 @@ demo/package*.json
 # submission video — host as a GitHub Release asset, not a committed file
 submission/demo.mp4
 *.mp4
+voiceover_script.txt
