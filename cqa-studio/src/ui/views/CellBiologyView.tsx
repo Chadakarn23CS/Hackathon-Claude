@@ -1,7 +1,32 @@
 import { useMemo } from 'react';
-import { bioView } from '../../model/engine';
+import { bioView, defaultKnobs } from '../../model/engine';
 import type { Knobs } from '../../model/types';
 import { Glycan } from '../glycan';
+
+/** Per-lever mechanism: how a changed knob acts on the glycan (short, judge-readable). */
+const LEVER_INFO: Record<string, { label: string; mech: string; fmt: (v: number) => string }> = {
+  kLa_CO2: { label: 'CO₂ stripping (kLa)', mech: 'Lower stripping → CO₂ accumulates → shifts Golgi lumen pH', fmt: (v) => `${v.toFixed(2)} h⁻¹` },
+  pH_set: { label: 'Broth pH setpoint', mech: 'Sets the Golgi lumen pH the transferases work at', fmt: (v) => v.toFixed(2) },
+  Mn: { label: 'Mn²⁺', mech: 'Catalytic cofactor for β4GalT + sialyltransferase', fmt: (v) => `${v.toFixed(2)}×` },
+  Fgal: { label: 'Galactose feed', mech: 'Fills the UDP-Gal donor pool → galactosylation', fmt: (v) => v.toFixed(2) },
+  Fglc: { label: 'Glucose feed', mech: 'Precursor supply for all nucleotide-sugar pools', fmt: (v) => v.toFixed(2) },
+  Fgln: { label: 'Glutamine feed', mech: 'N source → UDP-GlcNAc, but also raises ammonia', fmt: (v) => v.toFixed(3) },
+  B4GALT: { label: 'B4GALT1 expression', mech: 'Galactosyltransferase level → sets galactosylation', fmt: (v) => `${v.toFixed(2)}×` },
+  FUT8: { label: 'FUT8 expression', mech: 'Core fucosyltransferase; lower → more afucosylation (ADCC)', fmt: (v) => `${v.toFixed(2)}×` },
+  ST6GAL: { label: 'ST6GAL1 expression', mech: 'Sialyltransferase level → sets sialylation', fmt: (v) => `${v.toFixed(2)}×` },
+  MGAT: { label: 'MGAT expression', mech: 'GlcNAc branching enzyme → downstream processing', fmt: (v) => `${v.toFixed(2)}×` },
+  Tset: { label: 'Temperature', mech: 'Cooler → longer Golgi residence → more mature glycans', fmt: (v) => `${v.toFixed(0)} °C` },
+  DO: { label: 'Dissolved O₂', mech: 'Oxidative energy for CMP-sialic-acid → sialylation', fmt: (v) => `${v.toFixed(0)}%` },
+  asn_level: { label: 'Asparagine', mech: 'UDP-GlcNAc supply; depletion → more high-mannose', fmt: (v) => `${(v * 100).toFixed(0)}%` },
+};
+
+/** The four reported CQAs, with the direction that is usually "good/notable". */
+const CQA_ROW: { key: 'galactosylation' | 'afucosylation' | 'sialylation' | 'high_mannose'; label: string }[] = [
+  { key: 'galactosylation', label: 'Galactosylation' },
+  { key: 'afucosylation', label: 'Afucosylation' },
+  { key: 'sialylation', label: 'Sialylation' },
+  { key: 'high_mannose', label: 'High-mannose' },
+];
 
 /** pH -> lumen colour: acidic (amber) to neutral (blue-green). */
 function phColor(pH: number): string {
@@ -19,6 +44,14 @@ const ENZ_COLOR: Record<string, string> = {
 /** Interactive CHO cell-biology schematic: bioreactor -> cell -> Golgi enzymes -> glycan. */
 export function CellBiologyView({ knobs }: { knobs: Knobs }) {
   const bv = useMemo(() => bioView(knobs), [knobs]);
+  // Baseline harvest (default knobs) for the delta strip, and the set of knobs
+  // this preset/setting actually changed vs baseline — so the panel reports
+  // what THIS choice did, not a static glossary.
+  const base = useMemo(() => bioView(defaultKnobs()), []);
+  const kd = defaultKnobs() as unknown as Record<string, number>;
+  const changed = (Object.keys(LEVER_INFO) as string[])
+    .filter((key) => Math.abs(((knobs as unknown as Record<string, number>)[key] ?? kd[key]) - kd[key]) > 1e-9)
+    .map((key) => ({ key, val: (knobs as unknown as Record<string, number>)[key], info: LEVER_INFO[key] }));
 
   // Golgi cisternae positions (cis -> trans, left to right)
   const cisX = [290, 375, 460, 545];
@@ -186,6 +219,55 @@ export function CellBiologyView({ knobs }: { knobs: Knobs }) {
         </div>
         <div className="panel bio-cqa">
           <div className="panel-title">What changed &amp; why</div>
+
+          {/* Layer 1 — CQA delta strip: outcome at a glance, baseline → now */}
+          <div className="cqa-strip">
+            {CQA_ROW.map(({ key, label }) => {
+              const now = (bv.harvest as Record<string, number>)[key];
+              const b0 = (base.harvest as Record<string, number>)[key];
+              const d = now - b0;
+              const dir = Math.abs(d) < 0.05 ? 'flat' : d > 0 ? 'up' : 'down';
+              const arrow = dir === 'flat' ? '→' : dir === 'up' ? '▲' : '▼';
+              return (
+                <div className={`cqa-tile ${dir}`} key={key}>
+                  <div className="cqa-name">{label}</div>
+                  <div className="cqa-val">{b0.toFixed(1)}<span className="cqa-to"> → </span>{now.toFixed(1)}%</div>
+                  <div className="cqa-delta">{arrow} {dir === 'flat' ? 'unchanged' : `${d > 0 ? '+' : ''}${d.toFixed(1)} pts`}</div>
+                </div>
+              );
+            })}
+          </div>
+
+          {/* Layer 2 — driver chips: only the levers THIS setting changed */}
+          {changed.length > 0 ? (
+            <div className="driver-block">
+              <div className="driver-hd">Because you changed:</div>
+              <ul className="driver-chips">
+                {changed.map(({ key, val, info }) => (
+                  <li key={key} className="driver-chip">
+                    <span className="dc-lever">{info.label} <b>{info.fmt(val)}</b></span>
+                    <span className="dc-mech">{info.mech}</span>
+                  </li>
+                ))}
+              </ul>
+              <div className="driver-ph">
+                Golgi lumen pH <b>{bv.pHgolgi.toFixed(2)}</b> · pCO₂ <b>{bv.pCO2.toFixed(0)} mmHg</b> ·
+                transit <b>{bv.tau.toFixed(0)} min</b> — the state these levers put the Golgi in.
+              </div>
+            </div>
+          ) : (
+            <div className="driver-block">
+              <div className="driver-hd">Baseline — the calibrated reference process.</div>
+              <div className="driver-ph">
+                Pick a preset or move a slider and this panel shows exactly which lever moved and how it
+                reshaped the glycan. Golgi lumen pH <b>{bv.pHgolgi.toFixed(2)}</b> · pCO₂ <b>{bv.pCO2.toFixed(0)} mmHg</b>.
+              </div>
+            </div>
+          )}
+
+          {/* Layer 3 — the full mechanism glossary, preserved but tucked away */}
+          <details className="bio-deep">
+            <summary>The biology, in depth</summary>
           <ul className="bio-why">
             <li><b>ER — where it starts:</b> N-glycosylation begins co-translationally in the endoplasmic
               reticulum, where a pre-assembled Glc₃Man₉GlcNAc₂ precursor is transferred onto Asn297 and trimmed to
@@ -219,6 +301,7 @@ export function CellBiologyView({ knobs }: { knobs: Knobs }) {
               supplies the energy for CMP-sialic-acid synthesis; low DO or a lactate-heavy glycolytic shift starves
               sialylation. This is the Golgi↔mitochondria link — energy state, not a direct enzyme.</li>
           </ul>
+          </details>
         </div>
       </div>
     </div>
