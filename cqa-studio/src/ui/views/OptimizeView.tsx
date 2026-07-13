@@ -131,6 +131,25 @@ docker run -p 8000:8000 -e ANTHROPIC_API_KEY=sk-ant-... glycotwin`}</pre>
                 {res.converged ? ' converged' : ' best effort'} ·
                 best score <b>{res.best.score.toFixed(2)}</b>
               </div>
+
+              {/* Target vs achieved — did the agent hit each requested CQA? at a glance */}
+              <div className="cqa-strip opt-hit-strip">
+                {Object.entries(target).map(([key, tgt]) => {
+                  const got = (res.best.harvest as Record<string, number>)[key];
+                  if (got == null) return null;
+                  const miss = Math.abs(got - tgt);
+                  const dir = miss <= 1 ? 'up' : miss <= 3 ? 'flat' : 'down';
+                  const mark = dir === 'up' ? '✓ on target' : dir === 'flat' ? '≈ close' : `▲ ${miss.toFixed(1)} off`;
+                  const label = key.charAt(0).toUpperCase() + key.slice(1);
+                  return (
+                    <div className={`cqa-tile ${dir}`} key={key}>
+                      <div className="cqa-name">{label}</div>
+                      <div className="cqa-val">{tgt.toFixed(0)}<span className="cqa-to"> → </span>{got.toFixed(1)}%</div>
+                      <div className="cqa-delta">{mark}</div>
+                    </div>
+                  );
+                })}
+              </div>
               <div className="opt-rounds">
                 {res.history.map((h) => (
                   <div key={h.round} className="opt-card">

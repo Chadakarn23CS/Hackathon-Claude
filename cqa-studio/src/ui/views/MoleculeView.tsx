@@ -174,31 +174,51 @@ function dominantLabel(dist: Record<string, number>): string {
 /** Real 3D structure via 3Dmol.js (CDN loaded on demand; PDB text bundled offline). */
 function Mol3D() {
   const ref = useRef<HTMLDivElement>(null);
+  const viewerRef = useRef<any>(null);
   const [status, setStatus] = useState('loading 3D engine…');
   useEffect(() => {
     let cancelled = false;
+    // Re-fit the structure to the container: resize the GL canvas to the current
+    // panel size, then zoomTo so the whole antibody is centered and framed. Called
+    // after first render AND whenever the container resizes, so it always opens tidy.
+    const fit = () => {
+      const v = viewerRef.current;
+      if (!v || !ref.current) return;
+      try { v.resize(); v.zoomTo(); v.render(); } catch { /* viewer torn down */ }
+    };
     const render = () => {
       if (cancelled || !ref.current || !window.$3Dmol) return;
       try {
         const v = window.$3Dmol.createViewer(ref.current, { backgroundColor: 'white' });
+        viewerRef.current = v;
         v.addModel(PDB_1HZH, 'pdb');
         v.setStyle({}, { cartoon: { color: 'spectrum' } });
         // highlight the Fc N-glycan (het sugar residues) as sticks
         v.setStyle({ resn: ['NAG', 'BMA', 'MAN', 'GAL', 'FUC', 'SIA', 'NGA'] }, { stick: { colorscheme: 'yellowCarbon', radius: 0.3 } });
         v.zoomTo(); v.render(); setStatus('');
+        // A first fit after layout settles catches the case where the panel had no
+        // measured size at createViewer time (tab just opened) → otherwise clipped.
+        requestAnimationFrame(fit);
+        setTimeout(fit, 120);
       } catch (e) { setStatus('3D render failed — the schematic above still reflects the model.'); }
     };
-    if (window.$3Dmol) { render(); return; }
-    const s = document.createElement('script');
-    s.src = 'https://3Dmol.org/build/3Dmol-min.js';
-    s.onload = render;
-    s.onerror = () => setStatus('Could not load the 3D engine (offline). The schematic above is fully functional.');
-    document.head.appendChild(s);
-    return () => { cancelled = true; };
+    if (window.$3Dmol) { render(); }
+    else {
+      const s = document.createElement('script');
+      s.src = 'https://3Dmol.org/build/3Dmol-min.js';
+      s.onload = render;
+      s.onerror = () => setStatus('Could not load the 3D engine (offline). The schematic above is fully functional.');
+      document.head.appendChild(s);
+    }
+    // keep it framed on window / container resize
+    const ro = ref.current && 'ResizeObserver' in window ? new ResizeObserver(fit) : null;
+    if (ro && ref.current) ro.observe(ref.current);
+    window.addEventListener('resize', fit);
+    return () => { cancelled = true; ro?.disconnect(); window.removeEventListener('resize', fit); };
   }, []);
   return (
     <div style={{ marginTop: 8 }}>
-      <div ref={ref} style={{ position: 'relative', width: '100%', height: 320, border: '1px solid var(--border)', borderRadius: 8 }} />
+      <div ref={ref} style={{ position: 'relative', width: '100%', height: 340, minHeight: 340, border: '1px solid var(--border)', borderRadius: 8, overflow: 'hidden' }} />
       {status && <div className="mol-note">{status}</div>}
       <div className="mol-note">Intact human IgG1 (PDB 1HZH). Ribbon = protein; yellow sticks = the Fc N-glycan (Asn297 / author-numbered 314).</div>
     </div>

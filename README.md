@@ -11,6 +11,26 @@ Glycosylation is driven by its two real control levers — **Golgi enzymes** and
 **▶ Live app (no install):** https://chadakarn23cs.github.io/Hackathon-Claude/ — opens the full
 tool in the browser; every tab, including Agent Optimize, runs client-side.
 
+## The problem
+
+Glycosylation is a **critical quality attribute** of therapeutic antibodies: the Fc N-glycan
+sets effector potency (ADCC/CDC), half-life, and immunogenicity, so regulators treat it as a
+release-defining CQA. Yet it is set inside the Golgi by a branched enzyme network fed by
+nucleotide-sugar donors — many sequential reactions, several competing enzymes — which makes it
+**hard to predict and hard to control** from the process parameters an engineer can actually
+touch. Two questions recur through development and tech-transfer, and both are usually answered
+by expensive empirical runs: *which lever actually moves a given glycan attribute?* and *will
+that attribute hold when the process scales from a few liters to thousands?*
+
+## What this project does (research track)
+
+Starting from that question and **only public datasets and literature**, this project builds a
+mechanistic, transparent model of the whole chain — CHO fed-batch → Golgi enzyme train → N-glycan
+→ process control — and uses it to produce a **reproducible, falsifiable finding** about what
+controls Fc-galactosylation across scale (below). Every parameter is literature-sourced and
+page-cited, nothing is fit to proprietary data, and the analysis was carried out during the
+event. The tool is the instrument; **the finding is the result.**
+
 ## Demo
 
 <!-- To embed: draft a GitHub Release, drag demo.mp4 in, copy the github.com/user-attachments/… URL,
