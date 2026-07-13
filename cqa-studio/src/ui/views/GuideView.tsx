@@ -143,7 +143,7 @@ export function GuideView() {
           </ul>
         </section>
 
-        <section className="panel guide-span">
+        <section className="panel">
           <div className="panel-title">A 60-second walkthrough</div>
           <ol className="guide-steps">
             <li><b>Start in Cell Biology.</b> Drag <i>Mn²⁺</i> up — the β4GalT station brightens and the glycan

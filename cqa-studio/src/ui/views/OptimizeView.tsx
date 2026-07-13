@@ -249,26 +249,27 @@ function AgentGraph({ running, rounds, mode }: { running: boolean; rounds: numbe
   return (
     <div className="panel agent-graph">
       <div className="panel-title">Agent flow {mode ? `· ${mode === 'llm' ? 'LLM agents' : 'deterministic'} · ${rounds} round${rounds === 1 ? '' : 's'}` : ''}</div>
-      <svg viewBox="0 0 600 168" width="100%" style={{ maxHeight: 180 }} role="img" aria-label="agent flow graph">
+      <svg viewBox="0 0 600 176" width="100%" style={{ maxHeight: 190 }} role="img" aria-label="agent flow graph">
         <defs>
           <marker id="arw" markerWidth="9" markerHeight="9" refX="7" refY="3" orient="auto">
             <path d="M0,0 L7,3 L0,6 Z" fill="#5a6b83" />
           </marker>
         </defs>
-        <line x1="150" y1="62" x2="238" y2="62" stroke="#5a6b83" strokeWidth="1.6" markerEnd="url(#arw)" />
-        <line x1="360" y1="62" x2="448" y2="62" stroke="#5a6b83" strokeWidth="1.6" markerEnd="url(#arw)" />
-        <path d="M510,92 C510,140 90,140 90,92" fill="none" stroke="#5a6b83" strokeWidth="1.4" strokeDasharray="5 4" markerEnd="url(#arw)" />
-        <text x="300" y="160" fontSize="9.5" textAnchor="middle" fill="#5a6b83">feedback: refine proposal from critique + score</text>
+        <line x1="150" y1="71" x2="238" y2="71" stroke="#5a6b83" strokeWidth="1.6" markerEnd="url(#arw)" />
+        <line x1="360" y1="71" x2="448" y2="71" stroke="#5a6b83" strokeWidth="1.6" markerEnd="url(#arw)" />
+        <path d="M510,110 C510,150 90,150 90,110" fill="none" stroke="#5a6b83" strokeWidth="1.4" strokeDasharray="5 4" markerEnd="url(#arw)" />
+        <text x="300" y="170" fontSize="9.5" textAnchor="middle" fill="#5a6b83">feedback: refine proposal from critique + score</text>
         {nodes.map((n) => (
           <g key={n.id}>
-            <rect x={n.x - 60} y={38} width={120} height={48} rx={10}
+            <rect x={n.x - 60} y={38} width={120} height={66} rx={10}
               fill={running && active === n.id ? n.fill : '#ffffff'}
               stroke={n.fill} strokeWidth={running && active === n.id ? 2.5 : 1.5} />
             <text x={n.x} y={58} textAnchor="middle" fontSize={13} fontWeight={700}
               fill={running && active === n.id ? '#ffffff' : n.fill}>{n.label}</text>
-            <text x={n.x} y={74} textAnchor="middle" fontSize={9.5}
+            <text x={n.x} y={75} textAnchor="middle" fontSize={9.5}
               fill={running && active === n.id ? '#ffffff' : '#5a6b83'}>{n.sub}</text>
-            <text x={n.x} y={104} textAnchor="middle" fontSize={9} fill="#5a6b83">{n.hint}</text>
+            <text x={n.x} y={94} textAnchor="middle" fontSize={9}
+              fill={running && active === n.id ? '#ffffff' : '#5a6b83'}>{n.hint}</text>
           </g>
         ))}
       </svg>

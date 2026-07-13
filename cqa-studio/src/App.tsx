@@ -39,6 +39,7 @@ export default function App() {
   const [knobs, setKnobs] = useState<Knobs>(defaultKnobs());
   const [tab, setTab] = useState<TabId>('wf');
   const [tourSignal, setTourSignal] = useState(0);
+  const [sidebarOpen, setSidebarOpen] = useState(true);
 
   const setKnob = (k: keyof Knobs, v: number) => setKnobs((p) => ({ ...p, [k]: v }));
   const applyPreset = (partial: Partial<Knobs>) => setKnobs({ ...defaultKnobs(), ...partial });
@@ -101,7 +102,16 @@ export default function App() {
       </nav>
 
       <div className="body">
-        {tab !== 'guide' && tab !== 'opt' && tab !== 'wf' && <aside className="sidebar">
+        {tab !== 'guide' && tab !== 'opt' && tab !== 'wf' && !sidebarOpen && (
+          <button className="sidebar-rail" title="Show controls" aria-label="Show controls sidebar"
+            onClick={() => setSidebarOpen(true)}>▸<span className="rail-label">Controls</span></button>
+        )}
+        {tab !== 'guide' && tab !== 'opt' && tab !== 'wf' && sidebarOpen && <aside className="sidebar">
+          <div className="sidebar-hd">
+            <span className="sidebar-hd-t">Controls</span>
+            <button className="sidebar-hide" title="Hide controls" aria-label="Hide controls sidebar"
+              onClick={() => setSidebarOpen(false)}>◂ Hide</button>
+          </div>
           <CollapsibleGroup label="Presets">
             <div className="presets">
               {PRESETS.map((p) => (
