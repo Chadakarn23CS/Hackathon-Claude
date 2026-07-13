@@ -25,7 +25,7 @@ export function OptimizeView({ applyKnobs, go }: {
     if (tab && go) go(tab);
   };
   const [target, setTarget] = useState<Record<string, number>>({ galactosylation: 62, afucosylation: 6, sialylation: 7 });
-  const [rounds, setRounds] = useState(4);
+  const [rounds, setRounds] = useState(8);
   const [useLLM, setUseLLM] = useState(false);
   const [running, setRunning] = useState(false);
   const [res, setRes] = useState<OptResult | null>(null);
@@ -103,7 +103,7 @@ docker run -p 8000:8000 -e ANTHROPIC_API_KEY=sk-ant-... glycotwin`}</pre>
             </label>
           ))}
           <label className="opt-row"><span>rounds</span>
-            <input type="number" min={1} max={8} value={rounds} onChange={(e) => setRounds(parseInt(e.target.value) || 4)} />
+            <input type="number" min={1} max={8} value={rounds} onChange={(e) => setRounds(parseInt(e.target.value) || 8)} />
           </label>
           <label className="opt-row"><span>use LLM agents {online ? '' : '(needs backend)'}</span>
             <input type="checkbox" checked={useLLM} disabled={!online}
