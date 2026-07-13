@@ -2,21 +2,23 @@
 
 ## Paragraph (paste-ready for the form)
 
-I used the full Claude suite, each product where it was strongest. I started in **Claude**,
-brainstorming the biological question the moment I entered the hackathon and shaping it into
-something testable. **Claude Science** then did the heavy scientific work: deep research and
-literature review to ground every parameter in public sources, building the mechanistic model
-(CHO bioreactor → Golgi → N-glycan), running the analysis behind the finding, authoring a
-reusable recalibration skill (`cho-cqa-recalibrate`), and — the part that mattered most —
-continuously checking my work for scientific correctness, flagging where an explanation didn't
-match the model and where a claim needed a source. **Claude Code** ran the engineering loop:
-debugging, developing and improving the app, and running smoke tests and Playwright checks so I
-could trust the build; because the whole project lives in a GitHub repo, I could continue in
-Claude Code on my phone away from my laptop, then pick the deeper science back up in Claude
-Science. **Claude Design** made the tool feel like professional software, improving the UI and
-interface. Claude Science was the center of gravity — it turned a question into a validated,
-reproducible finding and the tool that produced it — while Claude Code and Claude Design made
-that tool robust and usable.
+I leaned on the whole Claude family, and each part earned its place. It started as a
+conversation in **Claude**, where I talked through the biological question I'd been sitting on —
+what really controls antibody galactosylation as you scale a process up — until it was sharp
+enough to test. From there, **Claude Science** did the real scientific heavy lifting. It read
+the literature with me so every parameter traces back to a public source, helped me build the
+mechanistic model that runs the whole chain from bioreactor to Golgi to N-glycan, ran the
+experiments behind the finding, and let me package the workflow as a reusable skill
+(`cho-cqa-recalibrate`) that refits the model to a new molecule. Honestly, the part I valued
+most was that it kept checking my science as we went — more than once it caught an explanation
+that didn't actually match the model, or a claim I couldn't source, and made me fix it. **Claude
+Code** was where the app got built and hardened: debugging, adding features, and running the
+tests so I could trust it. Because the whole project lives in a GitHub repo, I could even keep
+going on my phone in Claude Code when I was away from my laptop, then come back and pick the
+deeper science up again in Claude Science. And **Claude Design** made it look like real software
+rather than a prototype. If I had to name the center of it all, it was Claude Science — it turned
+a question into a finding I can reproduce, and the tool that produced it; Code and Design made
+that tool something people can actually use.
 
 ## Breakdown by product
 
