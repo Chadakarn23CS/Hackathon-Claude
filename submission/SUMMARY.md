@@ -11,9 +11,9 @@ model whose parameters come from published literature — not regressed to fit t
 that reproduces an independent meta-analysis blind. From
 bench to manufacturing, dissolved CO₂ climbs ~60→~74 mmHg, yet galactosylation barely moves
 (~52%→~53%): Golgi pH straddles the enzyme's pH optimum (~6.4), the flat top of its activity
-curve; oxygen has no effect. The implication: **at scale,
-galactosylation is set by clone and media, not by chasing CO₂** — while mixing and scale-up
-engineering still govern titer and keep the tank in this regime.
+curve; oxygen has no effect. The implication: **standard scale-up matching (kLa, vvm, P/V) still
+governs titer and holds pCO₂ in range — but once it does, galactosylation is set by clone and
+media, not by fine-tuning CO₂.**
 
-Every result is reproducible and fully open. GlycoTwin is a single-file, zero-install twin
-spanning antibody→process→quality→control, with a governed agent loop and recalibration skill.
+Every result is reproducible and fully open. GlycoTwin is a single-file twin spanning
+antibody→process→quality→control, with a governed agent loop and recalibration skill.
