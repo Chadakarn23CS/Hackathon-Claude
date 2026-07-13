@@ -156,11 +156,11 @@ def main():
         ax.legend(); fig.tight_layout(); fig.savefig(os.path.join(HERE, "figs", "2_do.png"), dpi=130); plt.close(fig)
 
         # fig3: lever recovery at mfg scale
-        fig, ax = plt.subplots(figsize=(6.6, 3.8))
+        fig, ax = plt.subplots(figsize=(8.2, 3.8))
         ln = [r["lever"] for r in lever_rows][::-1]; rc = [r["recovery_pp"] for r in lever_rows][::-1]
         ax.barh(ln, rc, color=[SAGE if v >= 0 else CLAY for v in rc])
         ax.set_xlabel("galactosylation recovery vs uncontrolled mfg (pp)")
-        ax.set_title("Which single lever recovers galactosylation at 2000 L?")
+        ax.set_title("Which single lever recovers galactosylation at 2000 L?", loc="left")
         fig.tight_layout(); fig.savefig(os.path.join(HERE, "figs", "3_levers.png"), dpi=130); plt.close(fig)
         out["figures"] = ["figs/1_scale.png", "figs/2_do.png", "figs/3_levers.png"]
     except Exception as e:  # pragma: no cover
@@ -174,7 +174,8 @@ def main():
     net = round(gal_mfg - gal_bench, 2)
     print(f"1) Constant DO, kLa falls bench->mfg: pCO2 rises {scale_rows[0]['pCO2max']}->{scale_rows[-1]['pCO2max']} mmHg, "
           f"yet harvest galactosylation is ROBUST: {gal_bench}% -> {gal_mfg}% (net {net:+} pp) — "
-          f"Golgi acidification is offset by slower-growth-extended residence.")
+          f"Golgi pH stays near the galactosyltransferase pH optimum (~6.4), so the pH-activity "
+          f"factor barely moves across scale.")
     print(f"2) Vary DO at bench: galactosylation moves only {out['galactosylation_range_over_DO_pp']} pp "
           f"across DO 20-90% (sialylation moves {out['sialylation_range_over_DO_pp']} pp). "
           f"=> O2 is NOT the galactosylation lever; CO2/pH is.")

@@ -26,9 +26,15 @@ predicts. Three concrete, reproducible results:
 2. **Galactosylation is robust to the CO₂ rise itself.** Bench→manufacturing, as CO₂-stripping
    efficiency falls (kLa 0.11→0.05) and **pCO₂ rises 59.8→73.9 mmHg**, harvest galactosylation
    changes only **+0.97 pp** (51.8→52.7 %, and it moves *up*, not down). Reason the mechanism
-   gives: higher pCO₂ acidifies the Golgi (↓ activity) **but** slows growth, which **lengthens
-   Golgi residence time** (↑ conversion) — the two effects nearly cancel. A lookup table or a
-   single-factor intuition misses this coupling; a mechanistic model captures it.
+   gives: over this pCO₂ range the Golgi-lumen pH moves only from ~6.43 to ~6.38, which
+   **straddles the galactosyltransferase pH optimum (~6.4)** — so the pH-activity factor stays
+   essentially at its peak (≈0.999) and even ticks *up* slightly as pH crosses toward the
+   optimum. Golgi residence time is nearly unchanged (~31 min) across scale, so it is the
+   **flatness of the enzyme's pH–activity curve near its optimum**, not a residence-time
+   trade-off, that keeps galactosylation robust. The naive "acidification → less galactose"
+   intuition assumes operation on the steep flank of the pH curve; the mechanism shows the
+   process sits near the peak, where the same pCO₂ swing barely moves activity — a coupling a
+   lookup table or single-factor rule of thumb misses.
 3. **The real galactosylation levers are genome + media, not the gas strategy.** At 2000 L,
    the single most effective lever to move galactosylation is **B4GALT1 overexpression
    (+35.3 pp)**, followed by Mn²⁺ and galactose feed — versus **~1 pp** for the CO₂ gas
