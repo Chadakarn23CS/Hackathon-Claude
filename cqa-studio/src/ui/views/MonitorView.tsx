@@ -32,6 +32,11 @@ export function MonitorView({ knobs }: { knobs: Knobs }) {
     return traj[bi];
   };
 
+  // Display everything in culture HOURS. The model works in days internally (r.t, day),
+  // so convert only at the plot/label boundary — the assimilation math is unchanged.
+  const th = r.t.map((d) => d * 24);
+  const dayH = day * 24;
+
   return (
     <div className="view mon">
       <div className="bio-legend">
@@ -45,9 +50,9 @@ export function MonitorView({ knobs }: { knobs: Knobs }) {
       <div className="mon-grid">
         <div className="panel mon-input">
           <div className="panel-title">Current batch reading</div>
-          <label className="opt-row"><span>culture day</span>
-            <input type="number" min={1} max={13} value={day}
-              onChange={(e) => setDay(parseInt(e.target.value) || 1)} />
+          <label className="opt-row"><span>cell culture duration (h)</span>
+            <input type="number" min={24} max={312} step={24} value={dayH}
+              onChange={(e) => setDay(Math.max(1, Math.round((parseInt(e.target.value) || 24) / 24)))} />
           </label>
           <label className="opt-row"><span>VCD (1e6/mL)</span>
             <input type="number" step="0.1" placeholder={nomAt(r.nominal.Xv).toFixed(1)}
@@ -105,24 +110,24 @@ export function MonitorView({ knobs }: { knobs: Knobs }) {
         <div className="panel-title">Plan vs. corrected forecast</div>
         <Plot
           data={[
-            { x: r.t, y: r.nominal.Xv, name: 'VCD plan', line: { color: '#93a1b5', dash: 'dot' } },
-            { x: r.t, y: r.VCD, name: 'VCD forecast', line: { color: '#2563eb' } },
+            { x: th, y: r.nominal.Xv, name: 'VCD plan', line: { color: '#93a1b5', dash: 'dot' } },
+            { x: th, y: r.VCD, name: 'VCD forecast', line: { color: '#2563eb' } },
           ]}
           layout={{ ...PLOT_LAYOUT, height: 240,
-            xaxis: { ...PLOT_LAYOUT.xaxis, title: 'Culture day' },
+            xaxis: { ...PLOT_LAYOUT.xaxis, title: 'Cell culture duration (h)' },
             yaxis: { ...PLOT_LAYOUT.yaxis, title: 'VCD (1e6/mL)' },
-            shapes: [{ type: 'line', x0: day, x1: day, y0: 0, y1: 1, yref: 'paper',
+            shapes: [{ type: 'line', x0: dayH, x1: dayH, y0: 0, y1: 1, yref: 'paper',
               line: { color: '#0ea5a4', width: 1.5, dash: 'dash' } }] }}
         />
         <Plot
           data={[
-            { x: r.t, y: r.nominal.cqaT.galactosylation, name: 'Galactosylation plan', line: { color: '#93a1b5', dash: 'dot' } },
-            { x: r.t, y: r.galactosylation, name: 'Galactosylation forecast', line: { color: '#0ea5a4' } },
+            { x: th, y: r.nominal.cqaT.galactosylation, name: 'Galactosylation plan', line: { color: '#93a1b5', dash: 'dot' } },
+            { x: th, y: r.galactosylation, name: 'Galactosylation forecast', line: { color: '#0ea5a4' } },
           ]}
           layout={{ ...PLOT_LAYOUT, height: 240,
-            xaxis: { ...PLOT_LAYOUT.xaxis, title: 'Culture day' },
+            xaxis: { ...PLOT_LAYOUT.xaxis, title: 'Cell culture duration (h)' },
             yaxis: { ...PLOT_LAYOUT.yaxis, title: 'Galactosylation (%)' },
-            shapes: [{ type: 'line', x0: day, x1: day, y0: 0, y1: 1, yref: 'paper',
+            shapes: [{ type: 'line', x0: dayH, x1: dayH, y0: 0, y1: 1, yref: 'paper',
               line: { color: '#0ea5a4', width: 1.5, dash: 'dash' } }] }}
         />
         <div className="panel-note">Dotted = plan (no data). Solid = forecast after assimilating your

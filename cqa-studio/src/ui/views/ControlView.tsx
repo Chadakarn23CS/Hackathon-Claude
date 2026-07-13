@@ -121,7 +121,7 @@ export function ControlView({ knobs }: { knobs: Knobs }) {
               { x: closedH, y: closed.pCO2, name: 'closed loop', line: { color: '#2563eb', width: 2.4 }, mode: 'lines' },
               { x: closedH, y: closed.sp, name: 'setpoint', line: { color: '#dc2626', dash: 'dash', width: 1.4 }, mode: 'lines' },
             ] as any}
-            layout={{ xaxis: { title: 'Culture hour' }, yaxis: { title: 'pCO₂ (mmHg)' } }} />
+            layout={{ xaxis: { title: 'Cell culture duration (h)' }, yaxis: { title: 'pCO₂ (mmHg)' } }} />
         </div>
         <div className="panel">
           <div className="panel-title">Manipulated variable — CO₂ stripping k<sub>L</sub>a</div>
@@ -129,7 +129,7 @@ export function ControlView({ knobs }: { knobs: Knobs }) {
             data={[
               { x: closedH, y: closed.mv, name: 'controller output', line: { color: '#0ea5a4', width: 2.2 }, mode: 'lines' },
             ] as any}
-            layout={{ xaxis: { title: 'Culture hour' }, yaxis: { title: 'kLa_CO₂ (1/h)' } }} />
+            layout={{ xaxis: { title: 'Cell culture duration (h)' }, yaxis: { title: 'kLa_CO₂ (1/h)' } }} />
         </div>
         <div className="panel">
           <div className="panel-title">Quality response — galactosylation</div>
@@ -140,7 +140,7 @@ export function ControlView({ knobs }: { knobs: Knobs }) {
               { x: [0, closedH[closedH.length - 1]], y: [gSpec[0], gSpec[0]], name: 'spec', line: { color: '#dc2626', dash: 'dash', width: 1 }, mode: 'lines' },
               { x: [0, closedH[closedH.length - 1]], y: [gSpec[1], gSpec[1]], showlegend: false, line: { color: '#dc2626', dash: 'dash', width: 1 }, mode: 'lines' },
             ] as any}
-            layout={{ xaxis: { title: 'Culture hour' }, yaxis: { title: 'galactosylation (%)' } }} />
+            layout={{ xaxis: { title: 'Cell culture duration (h)' }, yaxis: { title: 'galactosylation (%)' } }} />
         </div>
         <div className="panel">
           <div className="panel-title">Growth &amp; product</div>
@@ -149,7 +149,7 @@ export function ControlView({ knobs }: { knobs: Knobs }) {
               { x: closedH, y: closed.Xv, name: 'VCD (closed)', line: { color: '#2563eb', width: 2 }, mode: 'lines' },
               { x: closedH, y: closed.mAb, name: 'titer (closed)', yaxis: 'y2', line: { color: '#9333ea', width: 2 }, mode: 'lines' },
             ] as any}
-            layout={{ xaxis: { title: 'Culture hour' }, yaxis: { title: 'VCD (1e6/mL)' },
+            layout={{ xaxis: { title: 'Cell culture duration (h)' }, yaxis: { title: 'VCD (1e6/mL)' },
               yaxis2: { title: 'titer (mg/L)', overlaying: 'y', side: 'right', gridcolor: 'transparent', color: '#5a6b83' } }} />
         </div>
       </div>

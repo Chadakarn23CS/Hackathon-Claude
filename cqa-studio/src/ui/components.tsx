@@ -6,12 +6,12 @@ import type { KnobDef } from './config';
 export const PLOT_LAYOUT: Partial<Plotly.Layout> = {
   paper_bgcolor: 'transparent', plot_bgcolor: 'transparent',
   font: { color: '#16202e', family: 'Inter, system-ui, sans-serif', size: 11 },
-  margin: { l: 60, r: 18, t: 30, b: 56 },
+  margin: { l: 60, r: 18, t: 30, b: 78 },
   xaxis: { gridcolor: '#eef2f8', zerolinecolor: '#e2e8f2', linecolor: '#cbd5e6', tickfont: { color: '#5a6b83' },
     automargin: true, title: { standoff: 12 } },
   yaxis: { gridcolor: '#eef2f8', zerolinecolor: '#e2e8f2', linecolor: '#cbd5e6', tickfont: { color: '#5a6b83' },
     automargin: true, title: { standoff: 10 } },
-  legend: { orientation: 'h', y: -0.32, yanchor: 'top', font: { size: 10, color: '#5a6b83' } },
+  legend: { orientation: 'h', y: -0.42, yanchor: 'top', font: { size: 10, color: '#5a6b83' } },
   hovermode: 'closest',
 };
 const CONFIG: Partial<Plotly.Config> = { displayModeBar: false, responsive: true };

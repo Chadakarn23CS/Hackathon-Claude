@@ -390,6 +390,10 @@ table.tbl td { font-variant-numeric: tabular-nums; }
 /* ---- Agent Optimize: use-this-result block ---- */
 .opt-next { margin-top: 12px; padding: 12px; border: 1px solid var(--border);
   border-left: 3px solid var(--accent); border-radius: var(--r-sm); background: var(--panel-2); }
+.opt-howto { margin: 2px 0 12px 0; padding: 10px 12px 10px 28px; background: var(--panel-2);
+  border: 1px solid var(--border); border-radius: var(--r-sm); font-size: 11.5px;
+  color: var(--text); line-height: 1.55; }
+.opt-howto li { margin: 3px 0; }
 .opt-next-hd { font-size: 12px; font-weight: 700; color: var(--accent); margin-bottom: 5px; letter-spacing: 0.2px; }
 .opt-next-body { font-size: 11.5px; color: var(--muted); line-height: 1.5; margin-bottom: 9px; }
 .opt-next-btns { display: flex; flex-wrap: wrap; gap: 7px; margin-bottom: 9px; }

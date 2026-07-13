@@ -145,8 +145,12 @@ export function GuideView() {
               ))}
             </tbody>
           </table>
-          <p className="prov-note">Product-specific calibration to a user's own fed-batch + glycan data happens locally
-            via the <b>cho-cqa-recalibrate</b> skill and is never included in this open build.</p>
+          <p className="prov-note">Want the twin to match <i>your</i> molecule? The open-source
+            <b> cho-cqa-recalibrate</b> skill (in <code>skills/cho-cqa-recalibrate/</code> in this repo)
+            refits the mechanistic model to a specific product from its measured harvest N-glycan
+            profile, then rebuilds the app. Run it on your own fed-batch + glycan data — that
+            calibration stays local to you and is never part of this public build, so the open
+            release carries the method but no proprietary data.</p>
         </section>
       </div>
     </div>

@@ -38,7 +38,7 @@ export function SimulateView({ knobs }: { knobs: Knobs }) {
               x: hours, y: sim.cqaT[s.key], name: s.label, mode: 'lines',
               line: { color: CQA_COLOR[s.key], width: 2 },
             }))}
-            layout={{ ...PLOT_LAYOUT, xaxis: { ...PLOT_LAYOUT.xaxis, title: 'Culture hour' },
+            layout={{ ...PLOT_LAYOUT, xaxis: { ...PLOT_LAYOUT.xaxis, title: 'Cell culture duration (h)' },
               yaxis: { ...PLOT_LAYOUT.yaxis, title: '% of glycans' } }}
           />
         </div>
@@ -52,7 +52,7 @@ export function SimulateView({ knobs }: { knobs: Knobs }) {
               { x: hours, y: sim.cqaT.pH_golgi, name: 'Golgi pH', mode: 'lines', yaxis: 'y2',
                 line: { color: '#5aa9ff', width: 2 } },
             ]}
-            layout={{ ...PLOT_LAYOUT, xaxis: { ...PLOT_LAYOUT.xaxis, title: 'Culture hour' },
+            layout={{ ...PLOT_LAYOUT, xaxis: { ...PLOT_LAYOUT.xaxis, title: 'Cell culture duration (h)' },
               yaxis: { ...PLOT_LAYOUT.yaxis, title: 'pCO₂ (mmHg)' },
               yaxis2: { title: 'Golgi pH', overlaying: 'y', side: 'right', gridcolor: 'transparent',
                 color: '#5a6b83' } }}
@@ -67,7 +67,7 @@ export function SimulateView({ knobs }: { knobs: Knobs }) {
               { x: hours, y: sim.Xv, name: 'Viable cells (×10⁶/mL)', mode: 'lines', line: { color: '#7fd0a8', width: 2 } },
               { x: hours, y: sim.mAb, name: 'mAb (mg/L)', mode: 'lines', yaxis: 'y2', line: { color: '#f2c14e', width: 2 } },
             ]}
-            layout={{ ...PLOT_LAYOUT, xaxis: { ...PLOT_LAYOUT.xaxis, title: 'Culture hour' },
+            layout={{ ...PLOT_LAYOUT, xaxis: { ...PLOT_LAYOUT.xaxis, title: 'Cell culture duration (h)' },
               yaxis: { ...PLOT_LAYOUT.yaxis, title: 'VCD (×10⁶/mL)' },
               yaxis2: { title: 'Titer (mg/L)', overlaying: 'y', side: 'right', gridcolor: 'transparent', color: '#5a6b83' } }}
           />
@@ -82,7 +82,7 @@ export function SimulateView({ knobs }: { knobs: Knobs }) {
               { x: hours, y: sim.Lac, name: 'Lactate', mode: 'lines', line: { color: '#e8685f', width: 2 } },
               { x: hours, y: sim.Amm, name: 'Ammonia', mode: 'lines', line: { color: '#d8b6e0', width: 2 } },
             ]}
-            layout={{ ...PLOT_LAYOUT, xaxis: { ...PLOT_LAYOUT.xaxis, title: 'Culture hour' },
+            layout={{ ...PLOT_LAYOUT, xaxis: { ...PLOT_LAYOUT.xaxis, title: 'Cell culture duration (h)' },
               yaxis: { ...PLOT_LAYOUT.yaxis, title: 'mM' } }}
           />
           <div className="panel-note met-note">
@@ -114,7 +114,7 @@ export function SimulateView({ knobs }: { knobs: Knobs }) {
               { x: hours, y: sim.poolsT.GDPFuc, name: 'GDP-Fuc → core fucose', mode: 'lines', line: { color: '#dc2626', width: 2 } },
               { x: hours, y: sim.poolsT.CMPNeuAc, name: 'CMP-NeuAc → sialic acid', mode: 'lines', line: { color: '#9333ea', width: 2 } },
             ]}
-            layout={{ ...PLOT_LAYOUT, xaxis: { ...PLOT_LAYOUT.xaxis, title: 'Culture hour' },
+            layout={{ ...PLOT_LAYOUT, xaxis: { ...PLOT_LAYOUT.xaxis, title: 'Cell culture duration (h)' },
               yaxis: { ...PLOT_LAYOUT.yaxis, title: 'pool (relative to baseline = 1.0)' } }}
           />
           <div className="panel-note met-note">

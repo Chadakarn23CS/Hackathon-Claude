@@ -117,7 +117,13 @@ docker run -p 8000:8000 -e ANTHROPIC_API_KEY=sk-ant-... glycotwin`}</pre>
 
         <div className="panel">
           <div className="panel-title">Agent rounds</div>
-          {!res && !running && <div className="mol-note">Set a target and run. Each round shows the proposed knobs, the model-evaluated CQAs, and the critic's steer.</div>}
+          <ol className="opt-howto">
+            <li><b>Set a target</b> CQA profile (left) and press <b>Run optimization</b>.</li>
+            <li>Read the <b>rounds</b> below — each shows the proposed knobs, the model-scored CQAs, and the critic's steer.</li>
+            <li><b>Approve</b> the recipe in the Governance panel (it checks the knobs are in the validated range).</li>
+            <li>Click <b>Apply knobs to sliders</b>, then <b>→ Verify trajectory (Live Simulation)</b> to watch the batch play out — then Robustness and Sensitivity to confirm.</li>
+          </ol>
+          {!res && !running && <div className="mol-note">Nothing has run yet. Set a target and press Run — results appear here.</div>}
           {res && (
             <>
               <div className="opt-summary">
@@ -143,10 +149,12 @@ docker run -p 8000:8000 -e ANTHROPIC_API_KEY=sk-ant-... glycotwin`}</pre>
               </div>
 
               <div className="opt-next">
-                <div className="opt-next-hd">Use this result →</div>
+                <div className="opt-next-hd">Use this result → next steps</div>
                 <div className="opt-next-body">
-                  The agent found a recipe; now verify it. These buttons load the best knobs onto the
-                  sliders and jump you to the check.
+                  The agent proposed a recipe. Don't stop at the number — <b>verify it</b>, in order:
+                  <b> (1)</b> approve it in Governance below, <b>(2)</b> Apply the knobs to the sliders,
+                  <b> (3)</b> open Live Simulation to watch the batch reach that CQA, then <b>(4)</b> check
+                  Robustness (Cpk) and Sensitivity. The buttons below do each step and jump you there.
                 </div>
                 <div className="opt-next-btns">
                   <button className="btn primary" disabled={!approved} title={approved ? '' : 'Requires governance approval below'}
@@ -241,7 +249,7 @@ function AgentGraph({ running, rounds, mode }: { running: boolean; rounds: numbe
   return (
     <div className="panel agent-graph">
       <div className="panel-title">Agent flow {mode ? `· ${mode === 'llm' ? 'LLM agents' : 'deterministic'} · ${rounds} round${rounds === 1 ? '' : 's'}` : ''}</div>
-      <svg viewBox="0 0 600 150" width="100%" style={{ maxHeight: 160 }} role="img" aria-label="agent flow graph">
+      <svg viewBox="0 0 600 168" width="100%" style={{ maxHeight: 180 }} role="img" aria-label="agent flow graph">
         <defs>
           <marker id="arw" markerWidth="9" markerHeight="9" refX="7" refY="3" orient="auto">
             <path d="M0,0 L7,3 L0,6 Z" fill="#5a6b83" />
@@ -249,8 +257,8 @@ function AgentGraph({ running, rounds, mode }: { running: boolean; rounds: numbe
         </defs>
         <line x1="150" y1="62" x2="238" y2="62" stroke="#5a6b83" strokeWidth="1.6" markerEnd="url(#arw)" />
         <line x1="360" y1="62" x2="448" y2="62" stroke="#5a6b83" strokeWidth="1.6" markerEnd="url(#arw)" />
-        <path d="M510,92 C510,132 90,132 90,92" fill="none" stroke="#5a6b83" strokeWidth="1.4" strokeDasharray="5 4" markerEnd="url(#arw)" />
-        <text x="300" y="128" fontSize="9.5" textAnchor="middle" fill="#5a6b83">feedback: refine proposal from critique + score</text>
+        <path d="M510,92 C510,140 90,140 90,92" fill="none" stroke="#5a6b83" strokeWidth="1.4" strokeDasharray="5 4" markerEnd="url(#arw)" />
+        <text x="300" y="160" fontSize="9.5" textAnchor="middle" fill="#5a6b83">feedback: refine proposal from critique + score</text>
         {nodes.map((n) => (
           <g key={n.id}>
             <rect x={n.x - 60} y={38} width={120} height={48} rx={10}
