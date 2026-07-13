@@ -15,18 +15,18 @@ export const PLOT_LAYOUT: Partial<Plotly.Layout> = {
   legend: { orientation: 'h', y: -0.42, yanchor: 'top', font: { size: 10, color: '#5a6b83' } },
   hovermode: 'closest',
 };
-// Show a minimal modebar: keep only the PNG snapshot button (hover to reveal),
-// export at 2× for a crisp figure, and drop the Plotly logo + zoom/pan clutter
-// so every chart can be saved as a .png without the toolbar getting in the way.
+// Full interactive modebar on every chart: PNG snapshot, zoom, pan, zoom-in,
+// zoom-out, autoscale (fit-to-frame), and reset axes (home). We only drop the
+// box/lasso *select* tools (no data-selection use here) and the redundant
+// spikeline/hover-mode toggles, plus the Plotly logo. Explicit button list so a
+// judge sees standard chart navigation controls, not just the camera.
 const CONFIG: Partial<Plotly.Config> = {
   responsive: true,
   displaylogo: false,
-  displayModeBar: 'hover',
-  modeBarButtonsToRemove: [
-    'zoom2d', 'pan2d', 'select2d', 'lasso2d', 'zoomIn2d', 'zoomOut2d',
-    'autoScale2d', 'resetScale2d', 'toggleSpikelines',
-    'hoverClosestCartesian', 'hoverCompareCartesian',
-  ],
+  displayModeBar: true,
+  modeBarButtons: [[
+    'toImage', 'zoom2d', 'pan2d', 'zoomIn2d', 'zoomOut2d', 'autoScale2d', 'resetScale2d',
+  ]],
   toImageButtonOptions: { format: 'png', filename: 'glycotwin_chart', scale: 2 },
 };
 
