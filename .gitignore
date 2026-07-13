@@ -27,3 +27,9 @@ docs/GlycoTwin_novelty.md
 docs/GlycoTwin_drug_development_value.md
 docs/GlycoTwin_scaleup_strategy.md
 docs/GlycoTwin_biology_scope.md
+
+# demo video build artifacts (the animation.html source is tracked; outputs are not)
+demo/demo.mp4
+demo/node_modules/
+demo/package*.json
+/tmp/
