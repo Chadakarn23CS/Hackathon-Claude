@@ -4,7 +4,7 @@ import { defaultKnobs } from './model/engine';
 import type { Knobs } from './model/types';
 import { downloadScenario, parseScenario } from './model/scenario';
 import { KNOBS, GROUPS, PRESETS } from './ui/config';
-import { Slider } from './ui/components';
+import { Slider, CollapsibleGroup } from './ui/components';
 import { CellBiologyView } from './ui/views/CellBiologyView';
 import { MoleculeView } from './ui/views/MoleculeView';
 import { OptimizeView } from './ui/views/OptimizeView';
@@ -102,8 +102,7 @@ export default function App() {
 
       <div className="body">
         {tab !== 'guide' && tab !== 'opt' && tab !== 'wf' && <aside className="sidebar">
-          <div className="group">
-            <div className="glabel">Presets</div>
+          <CollapsibleGroup label="Presets">
             <div className="presets">
               {PRESETS.map((p) => (
                 <button key={p.name} className="btn" title={p.desc} onClick={() => applyPreset(p.knobs)}>
@@ -112,14 +111,13 @@ export default function App() {
               ))}
               <button className="btn ghost" onClick={() => setKnobs(defaultKnobs())}>↺ Reset</button>
             </div>
-          </div>
+          </CollapsibleGroup>
           {GROUPS.map((g) => (
-            <div className="group" key={g.id}>
-              <div className="glabel" style={{ color: g.color }}>{g.label}</div>
+            <CollapsibleGroup key={g.id} label={g.label} color={g.color}>
               {KNOBS.filter((k) => k.group === g.id).map((def) => (
                 <Slider key={def.key} def={def} value={knobs[def.key]} onChange={(v) => setKnob(def.key, v)} />
               ))}
-            </div>
+            </CollapsibleGroup>
           ))}
         </aside>}
 

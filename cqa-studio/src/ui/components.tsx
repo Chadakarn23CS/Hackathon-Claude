@@ -1,5 +1,6 @@
 /** Reusable presentational components. */
-import { useEffect, useRef } from 'react';
+import { useEffect, useRef, useState } from 'react';
+import type { ReactNode } from 'react';
 import Plotly from 'plotly.js-dist-min';
 import type { KnobDef } from './config';
 
@@ -14,7 +15,20 @@ export const PLOT_LAYOUT: Partial<Plotly.Layout> = {
   legend: { orientation: 'h', y: -0.42, yanchor: 'top', font: { size: 10, color: '#5a6b83' } },
   hovermode: 'closest',
 };
-const CONFIG: Partial<Plotly.Config> = { displayModeBar: false, responsive: true };
+// Show a minimal modebar: keep only the PNG snapshot button (hover to reveal),
+// export at 2× for a crisp figure, and drop the Plotly logo + zoom/pan clutter
+// so every chart can be saved as a .png without the toolbar getting in the way.
+const CONFIG: Partial<Plotly.Config> = {
+  responsive: true,
+  displaylogo: false,
+  displayModeBar: 'hover',
+  modeBarButtonsToRemove: [
+    'zoom2d', 'pan2d', 'select2d', 'lasso2d', 'zoomIn2d', 'zoomOut2d',
+    'autoScale2d', 'resetScale2d', 'toggleSpikelines',
+    'hoverClosestCartesian', 'hoverCompareCartesian',
+  ],
+  toImageButtonOptions: { format: 'png', filename: 'glycotwin_chart', scale: 2 },
+};
 
 export function Plot({ data, layout, height = 260 }: {
   data: Plotly.Data[]; layout?: Partial<Plotly.Layout>; height?: number;
@@ -53,6 +67,22 @@ export function Plot({ data, layout, height = 260 }: {
 
 export function Info({ text }: { text: string }) {
   return <span className="info">i<span className="tip">{text}</span></span>;
+}
+
+/** A sidebar group with a clickable header that shows/hides its body. */
+export function CollapsibleGroup({ label, color, defaultOpen = true, children }: {
+  label: string; color?: string; defaultOpen?: boolean; children: ReactNode;
+}) {
+  const [open, setOpen] = useState(defaultOpen);
+  return (
+    <div className="group">
+      <button className="glabel gtoggle" style={color ? { color } : undefined}
+        aria-expanded={open} onClick={() => setOpen((o) => !o)}>
+        <span className={`chev ${open ? 'open' : ''}`} aria-hidden>▸</span>{label}
+      </button>
+      {open && <div className="gbody">{children}</div>}
+    </div>
+  );
 }
 
 export function Slider({ def, value, onChange }: {

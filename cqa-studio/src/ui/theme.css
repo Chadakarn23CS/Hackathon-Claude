@@ -88,6 +88,13 @@ body {
 .group { margin-bottom: 14px; }
 .group > .glabel { font-size: 10.5px; text-transform: uppercase; letter-spacing: 0.8px;
   color: var(--faint); margin: 4px 0 8px; font-weight: 700; }
+.gtoggle { display: flex; align-items: center; gap: 6px; width: 100%; background: none;
+  border: none; padding: 4px 2px; cursor: pointer; text-align: left; font-family: inherit; }
+.gtoggle:hover { color: var(--accent); }
+.gtoggle .chev { display: inline-block; font-size: 9px; transition: transform 0.15s ease;
+  transform: rotate(0deg); }
+.gtoggle .chev.open { transform: rotate(90deg); }
+.gbody { padding-left: 2px; }
 .ctrl { margin-bottom: 11px; }
 .ctrl .row { display: flex; justify-content: space-between; align-items: baseline; margin-bottom: 3px; }
 .ctrl .name { font-size: 12px; color: var(--text); }
@@ -227,6 +234,19 @@ table.tbl td { font-variant-numeric: tabular-nums; }
 .guide p { font-size: 12.5px; color: var(--muted); line-height: 1.6; margin: 6px 0; }
 .guide b { color: var(--text); }
 .guide-note { font-size: 11.5px; color: var(--faint); border-left: 3px solid var(--accent); padding-left: 10px; }
+.journey { display: grid; grid-template-columns: repeat(3, 1fr); gap: 12px; margin: 14px 0 4px; }
+@media (max-width: 900px) { .journey { grid-template-columns: 1fr; } }
+.jstep { position: relative; background: var(--panel-2); border: 1px solid var(--border);
+  border-radius: var(--r); padding: 12px 14px; transition: border-color 0.15s ease, box-shadow 0.15s ease; }
+.jstep:hover { border-color: var(--accent); box-shadow: 0 6px 20px rgba(18,22,29,0.07); }
+.jstep-hd { display: flex; align-items: center; gap: 8px; margin-bottom: 7px; }
+.jnum { flex: none; width: 22px; height: 22px; border-radius: 50%; background: var(--accent);
+  color: #fff; font-size: 12px; font-weight: 700; display: flex; align-items: center; justify-content: center; }
+.jicon { font-size: 15px; }
+.jtab { font-size: 9.5px; text-transform: uppercase; letter-spacing: 0.5px; color: var(--faint);
+  font-weight: 600; margin-left: auto; text-align: right; line-height: 1.3; }
+.jtitle { font-size: 13.5px; font-weight: 700; color: var(--ink); margin-bottom: 4px; }
+.jbody { font-size: 11.5px; color: var(--muted); line-height: 1.5; }
 .guide-list, .guide-steps { margin: 6px 0 0; padding-left: 20px; font-size: 12.5px; color: var(--muted); line-height: 1.65; }
 .guide-list li, .guide-steps li { margin-bottom: 6px; }
 .guide-steps li b { color: var(--accent); }

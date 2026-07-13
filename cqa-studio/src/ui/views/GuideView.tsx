@@ -13,33 +13,36 @@ export function GuideView() {
 
       <div className="guide-grid">
         <section className="panel guide-span">
-          <div className="panel-title">Starting a new mAb program? Use it like this</div>
-          <p>If you have a new antibody candidate entering development, GlycoTwin is a
-          decision-support twin you use <b>before and alongside</b> the bench — to decide what to
-          target, what to control, and what to engineer. A typical path:</p>
-          <ol className="guide-steps">
-            <li><b>Define the glycan target from the molecule's mechanism of action.</b> Open
-            <i> Antibody Molecule</i> and map your MoA to CQAs: if it kills tumor cells via <b>ADCC</b>,
-            you want high <b>afucosylation</b> (drag FUT8 down → afuco rises); if via <b>CDC</b>, you
-            want high <b>galactosylation</b>; if you need long serum half-life, watch <b>sialylation</b>.
-            This turns "what glycan do I want?" into concrete CQA setpoints.</li>
-            <li><b>Find the levers that hit those setpoints.</b> In <i>Sensitivity</i>, rank which
-            inputs move your target CQA most — so you know early whether it's a media lever (Mn²⁺,
-            galactose), a process lever (CO₂ stripping, temperature), or a clone edit (B4GALT1, FUT8).</li>
-            <li><b>Let the agent propose a recipe.</b> In <i>Agent Optimize</i>, enter your target CQA
-            profile and run — it returns knob settings scored by the mechanism, and flags whether they're
-            process-implementable or need clone engineering.</li>
-            <li><b>Map the design space &amp; check manufacturability.</b> <i>Design Space (Q8)</i> gives
-            the in-spec operating region for a QbD control-strategy narrative; <i>Robustness (Cpk)</i>
-            tells you if that operating point survives real input variability.</li>
-            <li><b>Plan the control strategy &amp; scale-up.</b> <i>Process Control</i> shows a feedback
-            loop holding the CQA at setpoint; <i>Scale-Up</i> shows which parameter (CO₂ stripping) drifts
-            at manufacturing scale so you know what to control tightly during tech transfer.</li>
-            <li><b>Make it product-specific.</b> The public build is calibrated to a canonical IgG1. Once
-            you have your own fed-batch + harvest glycan data, run the open-source
-            <b> cho-cqa-recalibrate</b> skill (<code>skills/cho-cqa-recalibrate/</code>) to refit the twin
-            to <i>your</i> molecule — that calibration stays local to you.</li>
-          </ol>
+          <div className="panel-title">Starting a new mAb program? Follow the path</div>
+          <p>Bringing a new antibody into development? GlycoTwin is a decision-support twin you use
+          <b> before and alongside</b> the bench — to decide what to target, what to control, and what
+          to engineer. Follow these six steps in order:</p>
+          <div className="journey">
+            {[
+              { n: 1, icon: '🎯', tab: '1 · Antibody Molecule', title: 'Set the glycan target',
+                body: 'Map your mechanism of action to a CQA: ADCC → high afucosylation, CDC → high galactosylation, long half-life → sialylation. Turns "what glycan?" into setpoints.' },
+              { n: 2, icon: '📊', tab: '5 · Sensitivity', title: 'Find the levers',
+                body: 'Rank which inputs move your target CQA most — media (Mn²⁺, galactose), process (CO₂, temperature), or clone (B4GALT1, FUT8).' },
+              { n: 3, icon: '🤖', tab: '10 · Agent Optimize', title: 'Get a recipe',
+                body: 'Enter the target CQA profile and run. The agent returns knob settings scored by the mechanism, flagged process-implementable or needs-clone.' },
+              { n: 4, icon: '🗺️', tab: '6 · Design Space · 8 · Robustness', title: 'Prove it holds',
+                body: 'Design Space (Q8) gives the in-spec region for a QbD narrative; Robustness (Cpk) checks it survives real input variability.' },
+              { n: 5, icon: '🎛️', tab: '7 · Process Control · 9 · Scale-Up', title: 'Plan control & scale',
+                body: 'A feedback loop holds the CQA at setpoint; Scale-Up shows which parameter (CO₂ stripping) drifts at manufacturing scale — what to control at tech transfer.' },
+              { n: 6, icon: '🔬', tab: 'recalibrate skill', title: 'Make it your molecule',
+                body: 'Public build = canonical IgG1. With your own fed-batch + glycan data, run the open-source cho-cqa-recalibrate skill to refit the twin — that calibration stays local to you.' },
+            ].map((s) => (
+              <div className="jstep" key={s.n}>
+                <div className="jstep-hd">
+                  <span className="jnum">{s.n}</span>
+                  <span className="jicon" aria-hidden>{s.icon}</span>
+                  <span className="jtab">{s.tab}</span>
+                </div>
+                <div className="jtitle">{s.title}</div>
+                <div className="jbody">{s.body}</div>
+              </div>
+            ))}
+          </div>
           <p className="guide-note"><b>The honest boundary:</b> out of the box this is a
           <i> mechanistic, literature-calibrated</i> twin — use it to prioritize experiments, frame a
           design space, and reason about levers. It becomes a quantitative predictor for a specific
