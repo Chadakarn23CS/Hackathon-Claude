@@ -50,7 +50,7 @@ export function GuideView() {
           release assay.</p>
         </section>
 
-        <section className="panel">
+        <section className="panel guide-span">
           <div className="panel-title">What it models</div>
           <p>A 9-state fed-batch CHO bioreactor ODE (growth, glucose/glutamine, lactate/ammonia, product,
           dissolved CO₂, volume, galactose) feeds a Golgi enzyme-train that computes the N-glycan distribution
@@ -61,7 +61,7 @@ export function GuideView() {
           scenarios (36 automated tests). It is decision-support, not a validated release assay.</p>
         </section>
 
-        <section className="panel">
+        <section className="panel guide-span">
           <div className="panel-title">Reproducibility — Export &amp; Load a scenario</div>
           <p>The two buttons in the top-right header make any result shareable and reproducible:</p>
           <ul>
