@@ -37,8 +37,8 @@ continuously checked my work for scientific correctness — flagging where an
 explanation didn't match the model and where a claim needed a source.
 
 **Claude Code** handled the engineering loop: debugging, developing and improving
-the app, and running the smoke tests and Playwright frame-capture (for the demo)
-so I could trust the build. Because everything is anchored to the GitHub repo, I
+the app, and running the test suite (36 checks validating the TypeScript engine
+against its Python reference) so I could trust the build. Because everything is anchored to the GitHub repo, I
 could pick the work up in Claude Code on my phone while away from my laptop —
 pulling the latest, making progress, and pushing back — then continue the deeper
 scientific work in Claude Science later, without ever losing my place.

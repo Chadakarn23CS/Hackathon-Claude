@@ -83,9 +83,10 @@ export default function App() {
           <div className="sub">molecule → bioreactor → glycan → CQA → control</div>
         </div>
         <div className="spacer" />
-        <button className="hdr-btn" title="Download the current knobs + predicted CQAs + provenance as a reproducible JSON scenario"
+        <span className="hdr-cap" title="Export writes the current knobs + predicted CQAs + provenance to a JSON file; Load restores that exact operating point. Share the file so anyone reproduces your result.">save/share this exact operating point:</span>
+        <button className="hdr-btn" title="Download the current knobs + predicted CQAs + provenance as a reproducible JSON scenario file"
           onClick={() => downloadScenario(knobs)}>↓ Export scenario</button>
-        <button className="hdr-btn" title="Load a previously exported scenario file to restore its operating point"
+        <button className="hdr-btn" title="Load a previously exported scenario file to restore its exact operating point"
           onClick={() => fileRef.current?.click()}>↑ Load</button>
         <input ref={fileRef} type="file" accept="application/json,.json" style={{ display: 'none' }} onChange={onLoadFile} />
         <button className="hdr-btn" title="Replay the guided tour" onClick={() => setTourSignal((s) => s + 1)}>◎ Guided tour</button>

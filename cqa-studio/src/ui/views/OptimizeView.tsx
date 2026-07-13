@@ -105,10 +105,15 @@ docker run -p 8000:8000 -e ANTHROPIC_API_KEY=sk-ant-... glycotwin`}</pre>
           <label className="opt-row"><span>rounds</span>
             <input type="number" min={1} max={8} value={rounds} onChange={(e) => setRounds(parseInt(e.target.value) || 8)} />
           </label>
-          <label className="opt-row"><span>use LLM agents {online ? '' : '(needs backend)'}</span>
-            <input type="checkbox" checked={useLLM} disabled={!online}
-              onChange={(e) => setUseLLM(e.target.checked)} />
-          </label>
+          {/* Only shown when a backend is actually detected. On the public (Pages) build
+              there is no backend, so we hide it rather than show a permanently-disabled box —
+              the in-browser mechanistic search is the default and works with zero setup. */}
+          {online && (
+            <label className="opt-row"><span>use LLM agents</span>
+              <input type="checkbox" checked={useLLM}
+                onChange={(e) => setUseLLM(e.target.checked)} />
+            </label>
+          )}
           <button className="btn primary" disabled={running} onClick={run}>
             {running ? 'agents working…' : 'Run optimization'}
           </button>

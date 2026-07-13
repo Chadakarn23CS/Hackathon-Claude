@@ -532,6 +532,8 @@ table.tbl td { font-variant-numeric: tabular-nums; }
   border: 1px solid var(--border); border-radius: var(--r-pill); padding: 6px 14px; cursor: pointer;
   font-family: var(--sans); letter-spacing: 0.2px; transition: background 0.14s, border-color 0.14s, color 0.14s; }
 .hdr-btn:hover { background: var(--note); border-color: var(--accent); color: var(--accent-press); }
+.hdr-cap { font-size: 10.5px; color: var(--muted); margin-right: 6px; font-style: italic; white-space: nowrap; }
+@media (max-width: 980px) { .hdr-cap { display: none; } }
 
 /* ---- Guide two-lever pathway SVG ---- */
 .lever-svg { width: 100%; max-width: 720px; height: auto; margin: 8px 0 12px; display: block; }

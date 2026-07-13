@@ -61,6 +61,21 @@ export function GuideView() {
           scenarios (36 automated tests). It is decision-support, not a validated release assay.</p>
         </section>
 
+        <section className="panel">
+          <div className="panel-title">Reproducibility — Export &amp; Load a scenario</div>
+          <p>The two buttons in the top-right header make any result shareable and reproducible:</p>
+          <ul>
+            <li><b>↓ Export scenario</b> — writes a single JSON file capturing the exact operating point
+            (every knob value), the CQAs the model predicts there, and a provenance stamp (timestamp,
+            literature note, port fidelity). Nothing is hidden — it is the whole state.</li>
+            <li><b>↑ Load</b> — opens a previously exported file and restores that exact operating point,
+            snapping every slider back so you regenerate the identical result.</li>
+          </ul>
+          <p className="guide-note">Use it to hand a colleague — or a reviewer — one file that reproduces
+          your finding with no setup. This is the "analysis others can reproduce" artifact, entirely
+          client-side, and it works from the offline single-file build.</p>
+        </section>
+
         <section className="panel guide-span">
           <div className="panel-title">The biology it captures — and its scope</div>
           <p>Glycosylation is governed by <b>two coupled levers</b>, and the model is built directly on both:</p>
