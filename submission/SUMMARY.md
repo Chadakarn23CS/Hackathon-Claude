@@ -1,4 +1,4 @@
-# Written summary (181 words)
+# Written summary (193 words)
 
 **GlycoTwin — a mechanistic digital twin for antibody glycosylation**
 
