@@ -10,7 +10,9 @@ mechanistic foundation (the CHO bioreactor-to-Golgi glycan model), customizing t
 skills the project needed, building the interactive app, running the analysis behind the
 finding, and continuously checking my work for scientific correctness. **Claude Code** ran
 the engineering loop — debugging, catching bugs, developing and improving the app, and
-running smoke tests and Playwright checks so I could trust the build. **Claude Design**
+running smoke tests and Playwright checks so I could trust the build; because the whole
+project lives in a GitHub repo, I could even continue in Claude Code on my phone when away
+from my laptop, then pick the deeper science back up in Claude Science. **Claude Design**
 helped make the tool feel like professional software and helped author the skills across the
 project (the demo-video skill, the CQA recalibration skill, and others). Claude Science was
 the center of gravity — it turned a question into a validated, reproducible finding and the
@@ -35,7 +37,10 @@ where a claim needed a source.
 
 **Claude Code** handled the engineering loop: debugging, hunting for bugs,
 developing and improving the app, and running the smoke tests and Playwright
-checks so I could trust the build.
+checks so I could trust the build. Because everything is anchored to the GitHub
+repo, I could pick the work up in Claude Code on my phone while away from my
+laptop — pulling the latest, making progress, and pushing back — then continue
+the deeper scientific work in Claude Science later, without ever losing my place.
 
 **Claude Design** helped make the tool feel like professional software —
 improving the UI and interface — and helped author the skills across the project
