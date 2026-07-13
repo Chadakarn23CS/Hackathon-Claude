@@ -7,6 +7,7 @@ The three required deliverables, in one place.
 | 1 | **Demo video (≤3 min)** | `submission/demo.mp4` (or the embedded player in the [main README](../README.md#demo)) |
 | 2 | **Open-source repository** | This repo — Apache-2.0, all code + model + docs public |
 | 3 | **Written summary (100–200 words)** | [`submission/SUMMARY.md`](SUMMARY.md) |
+| + | **How I used Claude** (form question) | [`submission/CLAUDE_USAGE.md`](CLAUDE_USAGE.md) |
 
 ## The finding, in one line
 Fc-galactosylation is robust across CHO scale-up (+1 pp bench→2000 L); the dominant lever is
