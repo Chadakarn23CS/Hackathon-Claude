@@ -1,21 +1,19 @@
-# Written summary (194 words)
+# Written summary (180 words)
 
 **GlycoTwin — a mechanistic digital twin for antibody glycosylation**
 
-Antibody quality attributes like galactosylation and sialylation are set inside the
-Golgi, but process engineers can only touch the bioreactor. GlycoTwin closes that gap:
-a 9-state fed-batch CHO bioreactor ODE feeds an ER→Golgi enzyme-train, so moving a reactor
-knob propagates all the way to the secreted N-glycan on IgG1's Fc. Glycosylation is driven
-by its two real levers — Golgi enzymes and nucleotide-sugar donors — both explicit in the
-engine.
+A common mental model in CHO manufacturing says Fc-galactosylation degrades at scale
+because dissolved CO₂ accumulates, acidifying the Golgi and slowing galactosyltransferase.
+We tested that *in silico* with a mechanistic, literature-parameterized CHO fed-batch →
+Golgi → glycan model (no data fitting), driven by an agentic experiment loop — and the
+mechanism disagrees. Across bench → manufacturing, as pCO₂ rises 60 → 74 mmHg,
+galactosylation is **robust** (+1 pp), because the Golgi pH straddles the galactosyltransferase
+pH optimum (~6.4) where the pH–activity curve is flat. Dissolved O₂ moves galactosylation
+0 pp. The lever that actually recovers galactosylation at 2000 L is the **clone** (B4GALT1,
++35 pp), not the gas strategy. The practical implication: at scale-up, spend control effort
+on clone and media, not CO₂ stripping.
 
-Starting from a concrete question — *do scale-dependent CO₂/pH/transit-time gradients shift
-glycan CQAs?* — we grounded the model in public datasets (CHOGlycoNET, a CSBJ anti-Her2
-study, a 2026 *mAbs* meta-analysis) and reproduced the literature's <5% pH/DO/CO₂ ceiling
-blind. The single-file app runs the whole molecule→process→CQA→control chain: a real IgG1
-domain map, an interactive CHO-cell schematic, live simulation, a data-assimilating batch
-monitor, ICH-Q8 design space with NOR/PAR, sensitivity with two-factor interactions,
-Monte-Carlo robustness, a PID controller that holds pCO₂ with a disturbance-rejection demo,
-scale-up gas strategy, and a governed agent-optimization loop. A published Claude Science
-skill recalibrates the twin to any product in three calls. The engine reproduces its Python
-reference to ≤0.17% (36 automated tests).
+The finding is reproducible (`research/reproduce.sh`), mechanistically transparent, and
+grounded entirely in public literature. It was produced with GlycoTwin — a single-file,
+zero-install interactive twin running the whole molecule → process → CQA → control chain,
+with a governed agent-optimization loop and a recalibration skill for any product.
