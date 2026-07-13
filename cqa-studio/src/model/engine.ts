@@ -4,9 +4,9 @@
  * Ported 1:1 from the validated Python reference. The bioreactor ODE is
  * integrated with fixed-step RK4 (h = 1 h). Verified against harvest- and
  * trajectory-level fixtures from the Python reference (cho_cqa_model.py,
- * LSODA) across 10 scenarios in engine.test.ts: measured maximum relative
- * error 0.138 % (worst case: high_strip). The test suite (26 tests) also
- * checks integrator non-negativity and the core mechanistic monotonicities.
+ * LSODA) across 13 scenarios in engine.test.ts: measured maximum relative
+ * error 0.17 % (worst case: asn_low, high-mannose). The test suite (36 tests)
+ * also checks integrator non-negativity and the core mechanistic monotonicities.
  *
  * Parameters are literature-directed and calibrated to reproduce canonical
  * CHO fed-batch behaviour and established glycosylation responses. This is a
