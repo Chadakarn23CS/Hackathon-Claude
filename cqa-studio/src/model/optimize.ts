@@ -77,16 +77,31 @@ function coordinateStep(target: Record<string, number>, from: Point, decay: numb
     const d = Math.abs(h[k] - target[k]);
     if (d > wd) { wd = d; worst = k; }
   }
-  const [knob, sign] = DRIVERS[worst] ?? ['B4GALT', +1];
+  const [knob] = DRIVERS[worst] ?? ['B4GALT', +1];
+  const [lo, hi] = BOUNDS[knob] ?? [0, 3];
   const cur = knobs[knob] ?? base[knob] ?? 1.0;
-  const need = target[worst] - (h[worst] ?? 0);
-  // Step from the LAST visited point with a DECAYING magnitude. Walking from the last
-  // point (not always the incumbent best) plus a shrinking step means a round that fails
-  // to improve can't re-propose the identical candidate forever — the same stall fix
-  // applied to the backend agent (agents.py _coordinate_step).
-  const stepMag = (need > 0 ? 0.15 : -0.15) * Math.max(Math.abs(cur), 0.5) * decay;
-  knobs[knob] = cur + sign * stepMag;
-  return { knobs, rationale: `coordinate step on ${knob} to move ${worst} toward target` };
+  // LINE SEARCH on the worst CQA's driver knob. The CQA↔knob response is strongly
+  // nonlinear (e.g. afucosylation barely moves until FUT8 drops below ~0.5, then rises
+  // steeply), so a single fixed step stalls far from a reachable target. Instead the
+  // agent proposes a sweep of the driver across its range and the mechanistic model
+  // scores every candidate on the FULL target (ground truth) — coordinate descent that
+  // reliably reaches the reachable envelope. `decay` narrows the sweep window around the
+  // current value in later rounds so it refines rather than jumps. The current value is
+  // always a candidate, so a round can never make the score worse.
+  const half = (hi - lo) * (0.55 * decay + 0.45); // round 0 ≈ full range, later rounds tighten
+  const wlo = Math.max(lo, cur - half), whi = Math.min(hi, cur + half);
+  const N = 25;
+  // Always include the CURRENT value as a candidate, so the winner can never score worse
+  // than where we started — the search is monotonic non-worsening on the driver knob.
+  const trials = [cur];
+  for (let i = 0; i < N; i++) trials.push(wlo + ((whi - wlo) * i) / (N - 1));
+  let bestKnobs = { ...knobs, [knob]: cur }; let bestSc = score(harvestOf(bestKnobs), target);
+  for (const v of trials) {
+    const trial = { ...knobs, [knob]: v };
+    const sc = score(harvestOf(trial), target);
+    if (sc < bestSc) { bestSc = sc; bestKnobs = trial; }
+  }
+  return { knobs: bestKnobs, rationale: `line-search ${knob} to move ${worst} toward target` };
 }
 
 /** Run the local optimization loop. Mirrors the backend's keyless path exactly. */
@@ -94,13 +109,15 @@ export function optimizeLocal(target: Record<string, number>, rounds = 4): Local
   const history: OptEntry[] = [];
   let best: LocalOptResult['best'] = { knobs: {}, harvest: harvestOf({}), score: 0 };
   best.score = score(best.harvest, target);
-  // Advance the search from wherever we actually landed last round (not always `best`),
-  // so an overshoot is followed by a smaller, different step rather than an identical retry.
-  let last: Point = { knobs: best.knobs, harvest: best.harvest };
 
   for (let r = 0; r < rounds; r++) {
-    const decay = Math.pow(0.7, r); // step shrinks each round → refine toward target, don't oscillate
-    const prop = coordinateStep(target, last, decay);
+    const decay = Math.pow(0.7, r); // sweep window narrows each round → refine toward target
+    // Coordinate descent: each round line-searches the WORST CQA's driver knob, advancing
+    // from the incumbent BEST. Because the current value is always a sweep candidate, the
+    // best-so-far can only stay or improve — monotonic, no oscillation. Successive rounds
+    // pick up whichever CQA is now worst, so multi-target profiles are handled one knob at a time.
+    const from: Point = { knobs: best.knobs, harvest: best.harvest };
+    const prop = coordinateStep(target, from, decay);
     const knobs = clip(prop.knobs) as unknown as Record<string, number>;
     // keep only the knobs that differ from default so the display stays readable
     const shown: Record<string, number> = {};
@@ -109,9 +126,8 @@ export function optimizeLocal(target: Record<string, number>, rounds = 4): Local
     const harvest = harvestOf(knobs);
     const sc = score(harvest, target);
     history.push({ round: r, knobs: shown, harvest, score: sc, rationale: prop.rationale });
-    last = { knobs: shown, harvest }; // always advance from where we landed, improved or not
     if (sc < best.score) best = { knobs: shown, harvest, score: sc };
-    if (sc < 0.5) break;
+    if (best.score < 0.5) break;
   }
   return { target, best, history, converged: best.score < 0.5, mode: 'local' };
 }

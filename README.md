@@ -8,6 +8,9 @@ glycan (galactosylation, afucosylation, sialylation, high-mannose).
 Glycosylation is driven by its two real control levers — **Golgi enzymes** and
 **nucleotide-sugar donors** — and both are explicit in the model.
 
+**▶ Live app (no install):** https://chadakarn23cs.github.io/Hackathon-Claude/ — opens the full
+tool in the browser; every tab, including Agent Optimize, runs client-side.
+
 ## Research finding — what actually controls Fc-galactosylation across scale?
 **A common mental model in CHO manufacturing is wrong.** The assumption that Fc-galactosylation
 degrades at manufacturing scale because dissolved CO₂ accumulates (poorer stripping → carbonic
@@ -52,8 +55,10 @@ correlation does not.
 
 ## Run it
 
-**Offline (no install):** open `glycotwin_app.html` in any browser. Every tab works except the
-server-side agent proposer.
+**Offline (no install):** open `glycotwin_app.html` in any browser (or use the live link above).
+**Every tab works**, including Agent Optimize — its Proposer→Evaluator→Critic loop runs entirely
+client-side, with the mechanistic model scoring each candidate as ground truth. The optional
+backend below only swaps in an *LLM-narrated* proposer; the deterministic search is always available.
 
 **Full stack (adds the LLM agent proposer):**
 ```bash
