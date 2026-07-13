@@ -8,6 +8,31 @@ glycan (galactosylation, afucosylation, sialylation, high-mannose).
 Glycosylation is driven by its two real control levers — **Golgi enzymes** and
 **nucleotide-sugar donors** — and both are explicit in the model.
 
+## Research finding — what actually controls Fc-galactosylation across scale?
+**A common mental model in CHO manufacturing is wrong.** The assumption that Fc-galactosylation
+degrades at manufacturing scale because dissolved CO₂ accumulates (poorer stripping → carbonic
+acid → lower Golgi pH → less-active galactosyltransferase) is **not** what the mechanism predicts.
+
+Driving the literature-parameterized model with an agentic experiment loop (no data fitting), three
+reproducible results:
+
+1. **Galactosylation is robust across scale.** As CO₂ stripping falls bench→manufacturing
+   (kLa 0.11→0.05) and **pCO₂ rises 59.8→73.9 mmHg**, harvest galactosylation changes only
+   **+0.97 pp** (51.8→52.7%). The reason is mechanistic: the Golgi-lumen pH (~6.43→6.38) **straddles
+   the galactosyltransferase pH optimum (~6.4)**, so the pH–activity factor stays at its peak — the
+   process sits near the top of the enzyme's pH curve, not on its steep flank.
+2. **O₂ is not a galactosylation lever.** Varying dissolved O₂ 20→90% moves galactosylation **0.0 pp**
+   (it moves *sialylation* 0.6 pp). The scale gas that matters for the Fc glycan is **CO₂, not O₂**.
+3. **The real lever is the clone, not the gas strategy.** At 2000 L, B4GALT1 overexpression recovers
+   **+35 pp** of galactosylation; galactose feed and Mn²⁺ ~10 pp each; restoring CO₂ stripping ~0 pp.
+
+![Scale-up at constant DO: pCO₂ rises but harvest galactosylation is robust](research/figs/1_scale.png)
+
+**Why it matters for the field:** control effort at scale-up should target clone and media
+(B4GALT1, galactose, Mn²⁺), not CO₂-stripping gas strategy, for galactosylation. The result is
+fully reproducible (`research/reproduce.sh`), mechanistically transparent, and literature-grounded —
+see [`research/FINDING.md`](research/FINDING.md). The tool below is the *method* that produced it.
+
 ## The biology, and why a mechanistic model
 The engine encodes a single multiplicative activity law:
 **enzyme activity = expression × pH-factor × Mn²⁺-cofactor × substrate(Michaelis)**, with
