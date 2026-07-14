@@ -41,11 +41,9 @@ _2:42 walkthrough of the live tool — the finding, the mechanism, and the inter
      that bare URL on its own line right here (between these comments). GitHub renders it as a player.
      PASTE THE github.com/user-attachments/assets/... URL ON THE NEXT LINE, THEN DELETE THIS COMMENT. -->
 
-**▶ Watch on YouTube:** _(paste your YouTube watch URL here)_ &nbsp;·&nbsp; **Or download:** [`submission/demo.mp4`](submission/demo.mp4) (1080p, ~13 MB)
+[![Watch the GlycoTwin demo](https://img.youtube.com/vi/Aw47CJOsea4/hqdefault.jpg)](https://www.youtube.com/watch?v=Aw47CJOsea4)
 
-<!-- YOUTUBE THUMBNAIL (clickable card that opens YouTube; GitHub can't inline-play YouTube):
-     replace both occurrences of VIDEO_ID (the part after "v=" in the watch URL) with just that id:
-     [![Watch the GlycoTwin demo](https://img.youtube.com/vi/VIDEO_ID/hqdefault.jpg)](https://www.youtube.com/watch?v=VIDEO_ID) -->
+**▶ Watch on YouTube:** https://www.youtube.com/watch?v=Aw47CJOsea4 &nbsp;·&nbsp; **Or download:** [`submission/demo.mp4`](submission/demo.mp4) (1080p, ~13 MB)
 
 See [`submission/`](submission/) for the required hackathon deliverables (video, summary, repo).
 
