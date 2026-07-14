@@ -33,11 +33,15 @@ event. The tool is the instrument; **the finding is the result.**
 
 ## Demo
 
-<!-- To embed: draft a GitHub Release, drag demo.mp4 in, copy the github.com/user-attachments/… URL,
-     and paste it below on its own line — GitHub renders an inline player. -->
+<!-- To add the video: upload to YouTube (Unlisted or Public), then paste the watch URL into the
+     link below. GitHub can't inline-embed YouTube, so this renders as a clickable thumbnail:
+     replace VIDEO_ID in both the image src and the link href with your YouTube video id. -->
 
 _3-minute walkthrough — the finding, the mechanism, and the tool that produced it._
-**▶ Watch:** _(video link — paste the release asset URL here)_
+
+[![Watch the GlycoTwin demo](https://img.youtube.com/vi/VIDEO_ID/hqdefault.jpg)](https://www.youtube.com/watch?v=VIDEO_ID)
+
+**▶ Watch:** _(paste your YouTube URL here)_
 
 See [`submission/`](submission/) for the required hackathon deliverables (video, summary, repo).
 
