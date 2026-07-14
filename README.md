@@ -33,7 +33,7 @@ event. The tool is the instrument; **the finding is the result.**
 
 ## Demo
 
-_2:45 walkthrough of the live tool — the finding, the mechanism, and the interactive twin that produced it._
+_2:42 walkthrough of the live tool — the finding, the mechanism, and the interactive twin that produced it._
 
 **▶ Watch:** [`submission/demo.mp4`](submission/demo.mp4) — download or view the recorded walkthrough (1080p, ~13 MB).
 
