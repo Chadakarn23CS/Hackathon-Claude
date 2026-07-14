@@ -35,9 +35,15 @@ event. The tool is the instrument; **the finding is the result.**
 
 _2:42 walkthrough of the live tool — the finding, the mechanism, and the interactive twin that produced it._
 
-**▶ Watch:** [`submission/demo.mp4`](submission/demo.mp4) — download or view the recorded walkthrough (1080p, ~13 MB).
+<!-- INLINE PLAYER (plays inside this README on GitHub):
+     Draft a Release (Releases > Draft a new release), drag submission/demo.mp4 into the description
+     box, wait for upload, copy the github.com/user-attachments/assets/... URL it generates, and paste
+     that bare URL on its own line right here (between these comments). GitHub renders it as a player.
+     PASTE THE github.com/user-attachments/assets/... URL ON THE NEXT LINE, THEN DELETE THIS COMMENT. -->
 
-<!-- Optional: after uploading to YouTube (Unlisted or Public), add a clickable thumbnail here —
+**▶ Watch on YouTube:** _(paste your YouTube watch URL here)_ &nbsp;·&nbsp; **Or download:** [`submission/demo.mp4`](submission/demo.mp4) (1080p, ~13 MB)
+
+<!-- YOUTUBE THUMBNAIL (clickable card that opens YouTube; GitHub can't inline-play YouTube):
      replace both occurrences of VIDEO_ID (the part after "v=" in the watch URL) with just that id:
      [![Watch the GlycoTwin demo](https://img.youtube.com/vi/VIDEO_ID/hqdefault.jpg)](https://www.youtube.com/watch?v=VIDEO_ID) -->
 
