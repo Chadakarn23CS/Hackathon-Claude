@@ -33,9 +33,10 @@ event. The tool is the instrument; **the finding is the result.**
 
 ## Demo
 
-<!-- To add the video: upload to YouTube (Unlisted or Public), then paste the watch URL into the
-     link below. GitHub can't inline-embed YouTube, so this renders as a clickable thumbnail:
-     replace VIDEO_ID in both the image src and the link href with your YouTube video id. -->
+<!-- To add the video: upload to YouTube (Unlisted or Public). GitHub can't inline-embed YouTube,
+     so this renders as a clickable thumbnail. Find your video id — the part after "v=" in the
+     watch URL, e.g. https://www.youtube.com/watch?v=ABC123xyz  ->  id is ABC123xyz — and replace
+     BOTH occurrences of VIDEO_ID below (image src and link href) with just that id. -->
 
 _3-minute walkthrough — the finding, the mechanism, and the tool that produced it._
 
