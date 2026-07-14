@@ -1,4 +1,4 @@
-# GlycoTwin — a mechanistic digital twin for antibody glycosylation
+# GlycoTwin: a mechanistic digital twin that overturns how we control antibody glycosylation at manufacturing scale
 
 GlycoTwin connects the **bioreactor knob** an engineer can touch to the **N-glycan quality
 attribute** set inside the Golgi. A 9-state fed-batch CHO bioreactor ODE feeds an ER→Golgi
@@ -113,7 +113,10 @@ cd cqa-studio && npm install && npm test && npm run build
 | `cqa-studio/` | TypeScript/React source + Vitest suite (36 tests) |
 | `glycotwin-server/` | FastAPI backend; imports the Python model directly as the single source of truth |
 | `model/` | `cho_cqa_model.py` (bioreactor + glyco reference) and `golgi_pfr.py` |
-| `docs/` | Parameter provenance, GlycoPy related-work comparison, written submission summary |
+| `research/` | The finding: `FINDING.md`, `reproduce.sh`, figures, and the agent experiment log |
+| `submission/` | Hackathon deliverables — written summary, Claude-usage note, deliverables index |
+| `skills/` | `cho-cqa-recalibrate` — the reusable skill that refits the twin to a new product's data |
+| `docs/` | Parameter provenance and the GlycoPy related-work comparison |
 | `references/` | Citation metadata (RIS / BibTeX / table) for the parameterizing literature |
 
 ## The tool (12 views)
