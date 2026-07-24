@@ -74,7 +74,23 @@ project was already built to be safe on that front. Keep it that way:
    as curiosity and upskilling that complements a biopharma career — which is
    exactly what it is. Keep it aspirational, not competitive.
 
+## The visual to attach (recommended)
+`glycotwin-cell-biology.html` (in this folder) is a hand-drawn "second brain" sheet
+of the cell biology behind GlycoTwin — the ER→Golgi enzyme train, the four glycan
+quality attributes, and the scale-up finding. It's self-contained and interactive
+(hover the enzyme stations); open it in any browser.
+
+For the LinkedIn post itself, attach a **screenshot** of it (LinkedIn images beat
+links for reach). Good options:
+- The full sheet as a tall image, or
+- Just the pathway diagram (Section 2) as a single square/landscape image, which
+  reads best in the feed.
+
+To get a live link instead of an image, drop the HTML into your existing GitHub
+Pages site (the `Hackathon-Claude` repo already serves Pages), then link it in the
+first comment — keeping the post's own media a static image.
+
 ## How to post
 LinkedIn has no API you can post through here, so: copy the text of the version
-you want, open LinkedIn → "Start a post", paste, and add the demo video or a
-screenshot of the tool as media for reach. Emojis and hashtags survive the paste.
+you want, open LinkedIn → "Start a post", paste, add the cell-biology screenshot
+(or the demo video) as media, and share. Emojis and hashtags survive the paste.
