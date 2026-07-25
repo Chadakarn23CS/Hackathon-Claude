@@ -58,21 +58,21 @@ I'm sharing this because I want to keep learning out loud, especially where **AI
 
 ---
 
-## Post — short version (if you want something lighter)
+## Post — short & punchy (cell biology × genomics × AI)
 
-I spent a hackathon this month teaching myself how far AI can take one curious person in the science I care about.
+I spent a hackathon seeing how far AI could take one curious person into drug discovery.
 
-The result: **GlycoTwin**, a mechanistic digital twin that connects a bioreactor setting to the N-glycan quality attributes on a therapeutic antibody — built from published literature only, on my own time, with an AI agent running experiments in silico.
+The result: **GlycoTwin** — a digital twin of how a therapeutic antibody's glycan is built inside a cell, spanning the **genomics** (which genes: B4GALT1, FUT8, ST6GAL1) and the **cell biology** (the ER → Golgi enzyme train).
 
-Biggest surprise: a widely taught assumption (that antibody galactosylation drops at scale because CO₂ acidifies the Golgi) didn't hold in the model — the real lever was the clone, not the gas strategy.
+An AI agent loop then found the surprise: the antibody's galactosylation is set ~35× more by the **clone** than by the process everyone tries to tune.
 
-The tool is just the instrument. What I'm actually walking away with is momentum toward **AI in drug discovery**, and a lot of new questions.
+Public data, personal time, and a lot of new questions — learning out loud toward **AI × drug discovery**.
 
 ▶ https://chadakarn23cs.github.io/Hackathon-Claude/
 
-*Personal project, public data, personal time. Views my own.*
+*Independent personal project · public data · personal time · views my own.*
 
-#AI #DrugDiscovery #Bioinformatics #Biotech #Learning
+#AI #DrugDiscovery #Genomics #CellBiology #Biotech #Learning
 
 ---
 
