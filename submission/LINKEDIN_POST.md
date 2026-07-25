@@ -7,7 +7,35 @@ because this project sits close to antibody-drug work.
 
 ---
 
-## Post — main version (recommended)
+## Post — cell biology × genomics × AI (recommended for a drug-discovery signal)
+
+Pair this one with the cell-biology sheet (`glycotwin-cell-biology.html`) as the image.
+
+Over a hackathon this month I wanted to see how far AI could take one curious person into the biology I care about: antibody drug development.
+
+I built **GlycoTwin** — a mechanistic "digital twin" of how a therapeutic antibody's sugar coat (its Fc N-glycan) is assembled inside a CHO cell. It ties two worlds together:
+
+🧬 Genomics / the clone — which glycosyltransferase genes you dial up or down (B4GALT1, FUT8, ST6GAL1)
+🔬 Cell biology / the process — how those enzymes act along the ER → Golgi pathway under real bioreactor conditions
+
+— and connects both to the **N-glycan quality attributes** that set an antibody's potency, half-life, and safety.
+
+Then an AI agent loop (Proposer → Evaluator → Critic) ran experiments in silico against the model, and overturned something taught across CHO manufacturing: galactosylation doesn't really drop at scale from CO₂ — the dominant lever is the **clone (gene expression)**, ~35× more than the gas strategy.
+
+What I actually took away: with AI I could go from "curious about bioinformatics and drug discovery" to a working, testable model of part of the drug-development pipeline in days — reading the genomics, encoding the cell biology, writing the tests, and pressure-testing the result.
+
+I'm sharing because I want to keep learning out loud where **AI meets drug discovery**. If that's your world, I'd love to trade notes.
+
+▶ Live tool (runs in your browser): https://chadakarn23cs.github.io/Hackathon-Claude/
+🎥 3-min walkthrough: https://www.youtube.com/watch?v=Aw47CJOsea4
+
+*Independent personal project, built from public data on personal time. Views are my own and don't represent my employer.*
+
+#AI #DrugDiscovery #Bioinformatics #Genomics #CellBiology #Antibodies #Biotech #Learning
+
+---
+
+## Post — process/finding-first version
 
 Over a hackathon this month I set out to answer one thing for myself: can I actually use AI to build something real in the science I'm curious about?
 
