@@ -1,0 +1,124 @@
+# LinkedIn post — exploring AI at the hackathon (GlycoTwin)
+
+A ready-to-paste post about using AI to build GlycoTwin, framed as independent
+personal learning in the direction of drug discovery. Copy the text between the
+lines. Read the **"Before you post"** notes at the bottom first — they matter
+because this project sits close to antibody-drug work.
+
+---
+
+## Post — cell biology × genomics × AI (recommended for a drug-discovery signal)
+
+Pair this one with the cell-biology sheet (`glycotwin-cell-biology.html`) as the image.
+
+Over a hackathon this month I wanted to see how far AI could take one curious person into the biology I care about: antibody drug development.
+
+I built **GlycoTwin** — a mechanistic "digital twin" of how a therapeutic antibody's sugar coat (its Fc N-glycan) is assembled inside a CHO cell. It ties two worlds together:
+
+🧬 Genomics / the clone — which glycosyltransferase genes you dial up or down (B4GALT1, FUT8, ST6GAL1)
+🔬 Cell biology / the process — how those enzymes act along the ER → Golgi pathway under real bioreactor conditions
+
+— and connects both to the **N-glycan quality attributes** that set an antibody's potency, half-life, and safety.
+
+Then an AI agent loop (Proposer → Evaluator → Critic) ran experiments in silico against the model, and overturned something taught across CHO manufacturing: galactosylation doesn't really drop at scale from CO₂ — the dominant lever is the **clone (gene expression)**, ~35× more than the gas strategy.
+
+What I actually took away: with AI I could go from "curious about bioinformatics and drug discovery" to a working, testable model of part of the drug-development pipeline in days — reading the genomics, encoding the cell biology, writing the tests, and pressure-testing the result.
+
+I'm sharing because I want to keep learning out loud where **AI meets drug discovery**. If that's your world, I'd love to trade notes.
+
+▶ Live tool (runs in your browser): https://chadakarn23cs.github.io/Hackathon-Claude/
+🎥 3-min walkthrough: https://www.youtube.com/watch?v=Aw47CJOsea4
+
+*Independent personal project, built from public data on personal time. Views are my own and don't represent my employer.*
+
+#AI #DrugDiscovery #Bioinformatics #Genomics #CellBiology #Antibodies #Biotech #Learning
+
+---
+
+## Post — process/finding-first version
+
+Over a hackathon this month I set out to answer one thing for myself: can I actually use AI to build something real in the science I'm curious about?
+
+The something became **GlycoTwin** — a mechanistic "digital twin" that links a bioreactor knob an engineer can turn to the N-glycan quality attributes on a therapeutic antibody's Fc region. Move a process parameter and it propagates all the way through the CHO cell's Golgi enzyme train to the final glycan — galactosylation, afucosylation, sialylation.
+
+I built it end to end from **published literature only, on my own time**, and paired it with a governed AI agent loop (Proposer → Evaluator → Critic) that ran experiments in silico against the mechanistic model.
+
+The part that surprised me: a belief taught across CHO manufacturing — that galactosylation drops at scale because CO₂ accumulates and acidifies the Golgi — didn't hold up in the model. Across bench → manufacturing scale, galactosylation barely moved (~52% → ~53%); the real lever turned out to be the **clone** (B4GALT1 expression), not the gas strategy. Reproducible, falsifiable, and traced to cited papers rather than fit to an answer.
+
+What I took away is bigger than the result: AI let one curious person go from "I want to understand bioinformatics and drug discovery" to shipping a working, testable model of part of the CMC pipeline in days — reading the biology, encoding the mechanism, writing the tests, and pressure-testing the finding.
+
+I'm sharing this because I want to keep learning out loud, especially where **AI meets antibody drug development**. If that's your world, I'd genuinely love to trade notes.
+
+▶ Try the live tool (runs in your browser): https://chadakarn23cs.github.io/Hackathon-Claude/
+🎥 3-min walkthrough: https://www.youtube.com/watch?v=Aw47CJOsea4
+
+*Independent personal project, built from public data on personal time. Views are my own and don't represent my employer.*
+
+#AI #DrugDiscovery #Bioinformatics #Biotech #MachineLearning #Antibodies #Learning
+
+---
+
+## Post — short & punchy (cell biology × genomics × AI)
+
+I spent a hackathon seeing how far AI could take one curious person into drug discovery.
+
+The result: **GlycoTwin** — a digital twin of how a therapeutic antibody's glycan is built inside a cell, spanning the **genomics** (which genes: B4GALT1, FUT8, ST6GAL1) and the **cell biology** (the ER → Golgi enzyme train).
+
+An AI agent loop then found the surprise: the antibody's galactosylation is set ~35× more by the **clone** than by the process everyone tries to tune.
+
+Public data, personal time, and a lot of new questions — learning out loud toward **AI × drug discovery**.
+
+▶ https://chadakarn23cs.github.io/Hackathon-Claude/
+
+*Independent personal project · public data · personal time · views my own.*
+
+#AI #DrugDiscovery #Genomics #CellBiology #Biotech #Learning
+
+---
+
+## Before you post — keeping it clean vs. your day job
+
+You flagged not wanting this to conflict with your work. The good news: this
+project was already built to be safe on that front. Keep it that way:
+
+1. **Say it's personal, keep it personal.** The post already carries "independent
+   personal project, public data, personal time, views my own." Keep that line —
+   it's the single most important sentence for avoiding any appearance of speaking
+   for, or moonlighting against, your employer.
+2. **Don't name your employer in the post, and don't tag them.** Naming a specific
+   antibody-therapeutics company next to a post about antibody glycosylation can
+   read as speaking on their behalf. Post as yourself.
+3. **It uses zero employer material — say nothing that implies otherwise.** Every
+   parameter is literature-sourced and page-cited; there's no proprietary data,
+   model, code, or IP in here (see `../NOTICE` and the Provenance section of the
+   README). Don't add anecdotes, numbers, or screenshots from work.
+4. **Check your company policy before you hit post.** Because this is in the same
+   therapeutic space you work in, quickly review your employer's external-
+   communication / social-media / IP / outside-activity policy, or ask your
+   manager or ethics/compliance contact if unsure. This isn't legal advice — it's
+   the one prudent step for employer-adjacent content, and a two-line policy check
+   now beats a conversation later.
+5. **Frame drug discovery as growth, not a side business.** The post positions it
+   as curiosity and upskilling that complements a biopharma career — which is
+   exactly what it is. Keep it aspirational, not competitive.
+
+## The visual to attach (recommended)
+`glycotwin-cell-biology.html` (in this folder) is a hand-drawn "second brain" sheet
+of the cell biology behind GlycoTwin — the ER→Golgi enzyme train, the four glycan
+quality attributes, and the scale-up finding. It's self-contained and interactive
+(hover the enzyme stations); open it in any browser.
+
+For the LinkedIn post itself, attach a **screenshot** of it (LinkedIn images beat
+links for reach). Good options:
+- The full sheet as a tall image, or
+- Just the pathway diagram (Section 2) as a single square/landscape image, which
+  reads best in the feed.
+
+To get a live link instead of an image, drop the HTML into your existing GitHub
+Pages site (the `Hackathon-Claude` repo already serves Pages), then link it in the
+first comment — keeping the post's own media a static image.
+
+## How to post
+LinkedIn has no API you can post through here, so: copy the text of the version
+you want, open LinkedIn → "Start a post", paste, add the cell-biology screenshot
+(or the demo video) as media, and share. Emojis and hashtags survive the paste.
